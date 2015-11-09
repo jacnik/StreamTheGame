@@ -1,6 +1,7 @@
 package com.example.jacek.streamthegame;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 /**
@@ -65,7 +66,7 @@ public class MainThread extends Thread {
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
                 frameCount = 0;
                 totalTime = 0;
-                System.out.print(averageFPS); //todo this doesn't print but its ok since its just a mock
+                Log.d("MainThread", "averageFPS: " + averageFPS);
             }
         }
     }
