@@ -14,6 +14,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
     private Background background;
+    private Grid grid;
 
     public GamePanel(Context context) {
         super(context);
@@ -47,6 +48,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 getResources(),
                 R.drawable.logo_ps));
 
+        this.grid = new Grid(10, 5); // todo: implement levels
+
         // we can safely start the game loop
         this.thread.setRunning(true);
         this.thread.start();
@@ -76,9 +79,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void draw(Canvas canvas) {
         super.draw(canvas);
         this.background.draw(canvas);
+        this.grid.draw(canvas);
     }
 
     public void update() {
-        this.background.update(); // todo remove since background will be static?
+        //this.background.update(); // todo remove since background will be static?
     }
 }
