@@ -49,51 +49,6 @@ public class MainThread extends Thread {
                 // todo: handle/log
             }
         }
-
-
-//            this.canvas = this.surfaceHolder.lockCanvas();
-//            this.gamePanel.update();
-//            this.gamePanel.draw(canvas);
-//            surfaceHolder.unlockCanvasAndPost(canvas);
-
-
-//        while(this.running) {
-//            startTime = System.nanoTime();
-//            this.canvas = null;
-
-            //try locking the canvas for pixel editing
-//            try {
-//                this.canvas = this.surfaceHolder.lockCanvas();
-//                synchronized (this.surfaceHolder) {
-//                    this.gamePanel.update();
-//                    this.gamePanel.draw(canvas);
-//                }
-//            } catch (Exception e) {
-//                // todo handle main loop exceptions
-//            }
-//            timeMillis = (System.nanoTime() - startTime)/1000000;
-//            waitTime = targetTime - timeMillis;
-//
-//            try {
-//                this.sleep(waitTime);
-//            } catch (Exception e) {
-//                // todo handle sleep exceptions
-//            } finally {
-//                if (canvas != null) {
-//                    surfaceHolder.unlockCanvasAndPost(canvas);
-//                }
-//            }
-//
-//            totalTime += System.nanoTime() - startTime;
-//            frameCount++;
-//
-//            if(frameCount == FPS) {
-//                averageFPS = 1000/((totalTime/frameCount)/1000000);
-//                frameCount = 0;
-//                totalTime = 0;
-//                //Log.d("MainThread", "averageFPS: " + averageFPS);
-//            }
-//        }
     }
 
     public void setRunning(boolean running) {
