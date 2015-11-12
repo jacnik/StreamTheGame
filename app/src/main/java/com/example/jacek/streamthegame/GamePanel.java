@@ -17,9 +17,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public GamePanel(Context context) {
         super(context);
-        //setWillNotDraw(false);
-        //this.setZOrderOnTop(true);
-
         // add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
@@ -52,7 +49,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         // we can safely start the game loop
         this.thread.setRunning(true);
-        //this.thread.run();
         this.thread.start();
     }
 
@@ -83,6 +79,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update() {
-        //this.background.update(); // todo remove since background will be static?
+        this.background.update(); // todo remove since background will be static?
     }
 }

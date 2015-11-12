@@ -44,7 +44,7 @@ public class MainThread extends Thread {
             timeMillis = (System.nanoTime() - startTime)/1000000;
             waitTime = targetTime - timeMillis;
             try {
-                this.sleep(waitTime);
+                this.sleep(waitTime > 0 ? waitTime : 0);
             } catch (InterruptedException e) {
                 // todo: handle/log
             }
