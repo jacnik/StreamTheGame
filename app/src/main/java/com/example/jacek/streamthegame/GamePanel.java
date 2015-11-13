@@ -16,9 +16,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private Grid grid;
     private int nRows = 10; // todo do it better with levels
-    private int nCols = 7; // todo do it better
+    private int nCols = 7; // todo do it better  with levels
 
-    private int cellWidth, cellHeight; // todo maybe put this info into grid class
 
     public GamePanel(Context context) {
         super(context);
@@ -41,8 +40,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 //            } else {
 //                Log.d("TAG", "Coords: x=" + event.getX() + ",y=" + event.getY());
 //            }
-            int row = (int) event.getX() / this.cellWidth;
-            int col = (int) event.getY() / this.cellHeight;
+            int row = (int) event.getX() / this.grid.getCellWidth();
+            int col = (int) event.getY() / this.grid.getCellHeight();
             this.grid.activatePoint(row, col);
         }
         return super.onTouchEvent(event);
@@ -56,10 +55,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 R.drawable.logo_ps));
 
         this.grid = new Grid(this.nRows, this.nCols,
-                getWidth() / this.nRows, getHeight() / this.nCols); // todo: implement levels
-
-        this.cellWidth = getWidth() / this.nRows; // todo this is repetitive with grid
-        this.cellHeight = getHeight() / this.nCols;
+                getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
 
         // we can safely start the game loop
         this.thread.setRunning(true);
