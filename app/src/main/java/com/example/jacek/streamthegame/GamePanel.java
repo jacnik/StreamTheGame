@@ -15,6 +15,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
     private Background background;
     private Grid grid;
+    private int nRows = 10; // todo do it better with levels
+    private int nCols = 7; // todo do it better
+
+    private int cellWidth, cellHeight; // todo maybe put this info into grid class
 
     public GamePanel(Context context) {
         super(context);
@@ -30,14 +34,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 //            if (event.getY() > getHeight() - 50) {
-//                thread.setRunning(false);
-//                ((Activity)getContext()).finish();
+                //this.thread.setRunning(false);
+                //((Activity)getContext()).finish();
 //            } else {
 //                Log.d("TAG", "Coords: x=" + event.getX() + ",y=" + event.getY());
 //            }
-//        }
+            int row = (int) event.getX() / this.cellWidth;
+            int col = (int) event.getY() / this.cellHeight;
+            this.grid.activatePoint(row, col);
+        }
         return super.onTouchEvent(event);
     }
 
@@ -48,7 +55,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 getResources(),
                 R.drawable.logo_ps));
 
-        this.grid = new Grid(10, 5); // todo: implement levels
+        this.grid = new Grid(this.nRows, this.nCols,
+                getWidth() / this.nRows, getHeight() / this.nCols); // todo: implement levels
+
+        this.cellWidth = getWidth() / this.nRows; // todo this is repetitive with grid
+        this.cellHeight = getHeight() / this.nCols;
 
         // we can safely start the game loop
         this.thread.setRunning(true);

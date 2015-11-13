@@ -7,26 +7,28 @@ import android.graphics.Canvas;
  */
 public class Grid {
 
-    private int rows, cols;
+    private int nRows, nCols;
+    private int cellWidth, cellHeight;
+
     private PointObject[] points;
 
-    public Grid(int rows, int cols) {
-        this.rows = rows;
-        this.cols = cols;
+    public Grid(int rows, int cols, int cellWidth, int cellHeight) {
+        this.nRows = rows;
+        this.nCols = cols;
 
         this.points = new PointObject[rows*cols];
     }
 
     public void draw(Canvas canvas) {
-        int dx = canvas.getWidth() / (this.rows); // horizontal separation between points
-        int dy = canvas.getHeight() / (this.cols); // vertical separation between points
+        int dx = canvas.getWidth() / this.nRows; // horizontal separation between points
+        int dy = canvas.getHeight() / this.nCols; // vertical separation between points
 
-        for(int i = 0; i < this.rows * this.cols; ++i) {
+        for(int i = 0; i < this.nRows * this.nCols; ++i) {
             PointObject item = this.points[i];
             if (item == null) {
                 // create new item
-                int col = i / this.cols;
-                int row = i % this.cols;
+                int col = i / this.nCols;
+                int row = i % this.nCols;
                 item = new PointObject(col * dx + dx/2, row * dy + dy/2);
 //                if (row == 2 && col == 3) {
 //                    item.activate();
@@ -37,6 +39,9 @@ public class Grid {
             item.draw(canvas);
 
         }
+    }
 
+    public void activatePoint(int row, int col) {
+        this.points[row*this.nCols + col].activate(); // todo overflow checking
     }
 }
