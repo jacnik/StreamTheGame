@@ -55,7 +55,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 getResources(),
                 R.drawable.pipe1));
 
-
         this.grid = new Grid(this.nRows, this.nCols,
                 getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
 
