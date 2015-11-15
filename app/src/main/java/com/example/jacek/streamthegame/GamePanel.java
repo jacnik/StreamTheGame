@@ -13,11 +13,12 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
-    private Background background;
+    private Background background; // todo remove
     private Grid grid;
     private int nRows = 10; // todo do it better with levels
     private int nCols = 7; // todo do it better  with levels
 
+    private GameObject pipe;
 
     public GamePanel(Context context) {
         super(context);
@@ -50,9 +51,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
-        this.background = new Background(BitmapFactory.decodeResource(
+        this.pipe = new GameObject(BitmapFactory.decodeResource(
                 getResources(),
-                R.drawable.logo_ps));
+                R.drawable.pipe1));
+
 
         this.grid = new Grid(this.nRows, this.nCols,
                 getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
@@ -85,11 +87,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        this.background.draw(canvas);
+        //this.background.draw(canvas); // todo remove background altogether and add splashscreen with logo
         this.grid.draw(canvas);
+        this.pipe.draw(canvas); // pipes and elements should be handled via grid
     }
 
     public void update() {
-        //this.background.update(); // todo remove since background will be static?
+
     }
 }
