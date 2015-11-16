@@ -3,8 +3,11 @@ package com.example.jacek.streamthegame;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +21,9 @@ public class Grid {
     private int lastActivatedPoint;
 
     private Context context;
-    private PointObject[] points;
+    //private PointObject[] points;
     private HashMap<GameObject, Point> objects = new HashMap<>();
+    private ArrayList<Point> points = new ArrayList<>();
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
         this.context = context;
@@ -28,28 +32,42 @@ public class Grid {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
 
-        this.points = new PointObject[rows*cols];
+        //this.points = new PointObject[rows*cols];
     }
 
     public void draw(Canvas canvas) {
-        for(int i = 0; i < this.nRows * this.nCols; ++i) {
-            PointObject item = this.points[i];
-            if (item == null) {
-                // create new item
-                int col = i / this.nCols;
-                int row = i % this.nCols;
-                item = new PointObject(
-                        col * this.cellWidth + this.cellWidth/2,
-                        row * this.cellHeight + this.cellHeight/2);
-                this.points[i] = item;
-            }
-            // redraw item
-            item.draw(canvas);
-        }
+//        for(int i = 0; i < this.nRows * this.nCols; ++i) {
+//            PointObject item = this.points[i];
+//            if (item == null) {
+//                // create new item
+//                int col = i / this.nCols;
+//                int row = i % this.nCols;
+//                item = new PointObject(
+//                        col * this.cellWidth + this.cellWidth/2,
+//                        row * this.cellHeight + this.cellHeight/2);
+//                this.points[i] = item;
+//            }
+//            // redraw item
+//            item.draw(canvas);
+//        }
 
 //        for(GameObject obj : this.objects.keySet()) {
 //            obj.draw(canvas, 0 ,0);
 //        }
+
+        Paint paint = new Paint();
+        paint.setColor(Color.GRAY);
+        for (Point point : this.points) {
+            int startX = point.x * this.cellWidth;
+            int startY = point.y * this.cellHeight;
+            canvas.drawRect(
+                    startX, // start x
+                    startY,  // start y
+                    startX + this.cellWidth, // end x
+                    startY + this.cellHeight, // end y
+                    paint);
+        }
+
         for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
 //            canvas.drawBitmap(
 //                    entry.getKey().getImage(),
@@ -65,9 +83,10 @@ public class Grid {
     }
 
     public void activatePoint(int row, int col) {
-        this.points[this.lastActivatedPoint].deactivate();
-        this.lastActivatedPoint = row*this.nCols + col;
-        this.points[this.lastActivatedPoint].activate(); // todo overflow checking
+//        this.points[this.lastActivatedPoint].deactivate();
+//        this.lastActivatedPoint = row*this.nCols + col;
+//        this.points[this.lastActivatedPoint].activate(); // todo overflow checking
+        this.points.add(new Point(row, col));
     }
 
     public int getCellWidth() {
