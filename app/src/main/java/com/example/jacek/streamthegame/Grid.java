@@ -51,10 +51,15 @@ public class Grid {
 //            obj.draw(canvas, 0 ,0);
 //        }
         for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
+//            canvas.drawBitmap(
+//                    entry.getKey().getImage(),
+//                    this.cellWidth * entry.getValue().y,
+//                    this.cellHeight * entry.getValue().x,
+//                    null);
             canvas.drawBitmap(
                     entry.getKey().getImage(),
-                    this.cellHeight * entry.getValue().x,
-                    this.cellHeight * entry.getValue().y,
+                    this.cellWidth * entry.getKey().getHeightCells() * entry.getValue().y,
+                    this.cellHeight * entry.getKey().getWidthCells() * entry.getValue().x,
                     null);
         }
     }
@@ -73,23 +78,24 @@ public class Grid {
         return this.cellHeight;
     }
 
-    public void tryAddObject(Sprite sprite, int col, int row ) {
-        GameObject pipe = null;
+    public void tryAddObject(Sprite sprite, int row, int col ) {
+        GameObject pipe;
+        Point point = new Point(row, col);
         switch (sprite) {
             case short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.short_pipe), 1, 2);
-                pipe.resize(this.cellWidth, this.cellHeight * 2);
-                this.objects.put(pipe, new Point(col, row));
+                pipe.resize(this.cellHeight, this.cellWidth * 2);
+                this.objects.put(pipe, point);
                 break;
             case rotated_short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.short_pipe), 1, 2);
-                pipe.resize(this.cellWidth, this.cellHeight * 2);
+                pipe.resize(this.cellHeight, this.cellWidth * 2);
                 pipe.rotate();
-                this.objects.put(pipe, new Point(col, row));
+                this.objects.put(pipe, point);
                 break;
             default: break;
         }

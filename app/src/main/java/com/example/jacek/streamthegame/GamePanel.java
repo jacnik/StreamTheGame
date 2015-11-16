@@ -51,14 +51,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         this.grid = new Grid(this.getContext(), this.nRows, this.nCols,
                 getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
 
+//        this.grid.tryAddObject(Sprite.short_pipe, 0, 0);
+//        this.grid.tryAddObject(Sprite.short_pipe, 0, 2);
+//        this.grid.tryAddObject(Sprite.rotated_short_pipe, 1, 0);
+//        this.grid.tryAddObject(Sprite.rotated_short_pipe, 3, 0);
+//        this.grid.tryAddObject(Sprite.rotated_short_pipe, 5, 0);
+//        this.grid.tryAddObject(Sprite.rotated_short_pipe, 7, 0);
+//        this.grid.tryAddObject(Sprite.rotated_short_pipe, 9, 0);
         this.grid.tryAddObject(Sprite.short_pipe, 0, 0);
-        this.grid.tryAddObject(Sprite.short_pipe, 0, 2);
-        this.grid.tryAddObject(Sprite.rotated_short_pipe, 1, 0);
-        this.grid.tryAddObject(Sprite.rotated_short_pipe, 3, 0);
-        this.grid.tryAddObject(Sprite.rotated_short_pipe, 5, 0);
-        this.grid.tryAddObject(Sprite.rotated_short_pipe, 7, 0);
-        this.grid.tryAddObject(Sprite.rotated_short_pipe, 9, 0);
-
+        this.grid.tryAddObject(Sprite.short_pipe, 2, 0);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 1);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 3);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 5);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 7);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 9);
 
         // we can safely start the game loop
         this.thread.setRunning(true);

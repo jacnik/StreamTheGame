@@ -27,6 +27,14 @@ public class GameObject {
         return this.image;
     }
 
+    public int getWidthCells() {
+        return this.widthCells;
+    }
+
+    public int getHeightCells() {
+        return  this.heightCells;
+    }
+
     public void resize(int dx, int dy) {
         this.image = Bitmap.createScaledBitmap(this.image, dx, dy, false);
     }
