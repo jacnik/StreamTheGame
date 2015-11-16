@@ -18,7 +18,7 @@ public class Grid {
 
     private int nRows, nCols;
     private int cellWidth, cellHeight;
-    private int lastActivatedPoint;
+    //private int lastActivatedPoint;
 
     private Context context;
     //private PointObject[] points;

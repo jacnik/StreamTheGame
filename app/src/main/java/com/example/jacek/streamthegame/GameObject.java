@@ -56,6 +56,7 @@ public class GameObject {
     public void rotate() {
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
+
         this.image = Bitmap.createBitmap(
                 this.image, 0, 0, this.image.getWidth(),
                 this.image.getHeight(), matrix, true);
