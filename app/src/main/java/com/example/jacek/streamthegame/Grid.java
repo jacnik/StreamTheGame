@@ -76,8 +76,8 @@ public class Grid {
 //                    null);
             canvas.drawBitmap(
                     entry.getKey().getImage(),
-                    this.cellWidth * entry.getKey().getHeightCells() * entry.getValue().y,
-                    this.cellHeight * entry.getKey().getWidthCells() * entry.getValue().x,
+                    this.cellWidth * entry.getValue().y,
+                    this.cellHeight * entry.getValue().x,
                     null);
         }
     }
@@ -104,15 +104,16 @@ public class Grid {
             case short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
-                        R.drawable.short_pipe), 1, 2);
-                pipe.resize(this.cellHeight, this.cellWidth * 2);
+                        R.drawable.short_pipe),
+                        1, 2,
+                        this.cellWidth, this.cellHeight);
                 this.objects.put(pipe, point);
                 break;
             case rotated_short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
-                        R.drawable.short_pipe), 1, 2);
-                pipe.resize(this.cellHeight, this.cellWidth * 2);
+                        R.drawable.short_pipe), 1, 2,
+                        this.cellWidth, this.cellHeight);
                 pipe.rotate();
                 this.objects.put(pipe, point);
                 break;
