@@ -1,7 +1,6 @@
 package com.example.jacek.streamthegame;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -13,12 +12,10 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
-    private Background background; // todo remove
     private Grid grid;
     private int nRows = 10; // todo do it better with levels
     private int nCols = 7; // todo do it better  with levels
 
-    private GameObject pipe;
 
     public GamePanel(Context context) {
         super(context);
@@ -51,12 +48,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
-        this.pipe = new GameObject(BitmapFactory.decodeResource(
-                getResources(),
-                R.drawable.pipe1));
-
-        this.grid = new Grid(this.nRows, this.nCols,
+        this.grid = new Grid(this.getContext(), this.nRows, this.nCols,
                 getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
+
+        this.grid.tryAddObject(Sprite.short_pipe, 0, 0);
+        this.grid.tryAddObject(Sprite.short_pipe, 0, 2);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 1, 0);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 3, 0);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 5, 0);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 7, 0);
+        this.grid.tryAddObject(Sprite.rotated_short_pipe, 9, 0);
+
 
         // we can safely start the game loop
         this.thread.setRunning(true);
@@ -86,9 +88,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        //this.background.draw(canvas); // todo remove background altogether and add splashscreen with logo
         this.grid.draw(canvas);
-        this.pipe.draw(canvas); // pipes and elements should be handled via grid
     }
 
     public void update() {
