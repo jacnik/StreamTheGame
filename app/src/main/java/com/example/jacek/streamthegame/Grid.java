@@ -9,6 +9,7 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -20,10 +21,17 @@ public class Grid {
     private int cellWidth, cellHeight;
     //private int lastActivatedPoint;
 
+    // currentLayout maps all cells with object that are placed on them
+    // from item number to coordinates:
+    //      int col = i / this.nCols;
+    //      int row = i % this.nCols;
+    // from coordinates to element in the array:
+    //      int i = row*this.nCols + col;
+    private GameObject[] currentLayout; // todo maybe new class.
+
     private Context context;
-    //private PointObject[] points;
     private HashMap<GameObject, Point> objects = new HashMap<>();
-    private ArrayList<Point> points = new ArrayList<>();
+    private ArrayList<Point> activeCells = new ArrayList<>();
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
         this.context = context;
@@ -32,12 +40,12 @@ public class Grid {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
 
-        //this.points = new PointObject[rows*cols];
+        this.currentLayout = new GameObject[rows*cols];
     }
 
     public void draw(Canvas canvas) {
 //        for(int i = 0; i < this.nRows * this.nCols; ++i) {
-//            PointObject item = this.points[i];
+//            PointObject item = this.activeCells[i];
 //            if (item == null) {
 //                // create new item
 //                int col = i / this.nCols;
@@ -45,7 +53,7 @@ public class Grid {
 //                item = new PointObject(
 //                        col * this.cellWidth + this.cellWidth/2,
 //                        row * this.cellHeight + this.cellHeight/2);
-//                this.points[i] = item;
+//                this.activeCells[i] = item;
 //            }
 //            // redraw item
 //            item.draw(canvas);
@@ -57,7 +65,7 @@ public class Grid {
 
         Paint paint = new Paint();
         paint.setColor(Color.GRAY);
-        for (Point point : this.points) {
+        for (Point point : this.activeCells) {
             int startX = point.x * this.cellWidth;
             int startY = point.y * this.cellHeight;
             canvas.drawRect(
@@ -68,12 +76,26 @@ public class Grid {
                     paint);
         }
 
+        paint.setColor(Color.RED);
+        HashSet<GameObject> drawn = new HashSet<>();
+        for(int i = 0; i < this.nRows * this.nCols; ++i)  {
+            GameObject item = this.currentLayout[i];
+            if (item != null && !drawn.contains(item)) {
+                int row = i / this.nCols;
+                int col = i % this.nCols;
+                canvas.drawRect(
+                        col * this.cellWidth,
+                        row * this.cellHeight,
+                        (col + item.getWidthCells()) * this.cellWidth,
+                        (row + item.getHeightCells()) * this.cellHeight,
+                        paint
+                );
+                drawn.add(item);
+            }
+        }
+
+        // todo maybe remove this.objects and use currentLayout instead
         for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
-//            canvas.drawBitmap(
-//                    entry.getKey().getImage(),
-//                    this.cellWidth * entry.getValue().y,
-//                    this.cellHeight * entry.getValue().x,
-//                    null);
             canvas.drawBitmap(
                     entry.getKey().getImage(),
                     this.cellWidth * entry.getValue().y,
@@ -83,10 +105,10 @@ public class Grid {
     }
 
     public void activatePoint(int row, int col) {
-//        this.points[this.lastActivatedPoint].deactivate();
+//        this.activeCells[this.lastActivatedPoint].deactivate();
 //        this.lastActivatedPoint = row*this.nCols + col;
-//        this.points[this.lastActivatedPoint].activate(); // todo overflow checking
-        this.points.add(new Point(row, col));
+//        this.activeCells[this.lastActivatedPoint].activate(); // todo overflow checking
+        this.activeCells.add(new Point(row, col));
     }
 
     public int getCellWidth() {
@@ -108,16 +130,40 @@ public class Grid {
                         1, 2,
                         this.cellWidth, this.cellHeight);
                 this.objects.put(pipe, point);
+                this.addToLayout(pipe, row, col, pipe.getWidthCells(), pipe.getHeightCells());
                 break;
             case rotated_short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
-                        R.drawable.short_pipe), 1, 2,
+                        R.drawable.short_pipe),
+                        1, 2,
                         this.cellWidth, this.cellHeight);
                 pipe.rotate();
                 this.objects.put(pipe, point);
                 break;
             default: break;
+        }
+    }
+
+    /** Adds GameObject to layout in every row and col that this GameObject will occupy.
+     * @param object: object to add to layout.
+     * @param row: x coordinate of the upper left corner of the object.
+     * @param col: y coordinate of the upper left corner of the object.
+     * @param width: how many cells this object occupies in x-direction.
+     * @param height: how many cells this object occupies in y-direction.
+     * */
+    private void addToLayout(GameObject object, int row, int col, int width, int height) {
+        for (int i = 0; i < width; ++i) {
+            for (int j = 0; j < height; ++j) {
+                int pos = (row + i)*this.nCols + (col+j);
+                this.currentLayout[pos] = object;
+            }
+        }
+    }
+
+    private void clearLayout() {
+        for (GameObject obj : this.currentLayout) {
+            obj = null;
         }
     }
 }
