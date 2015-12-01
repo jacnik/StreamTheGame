@@ -2,6 +2,7 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -9,10 +10,11 @@ import android.view.SurfaceView;
 /**
  * Created by jacek on 11/9/2015.
  */
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
+public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     private Grid grid;
+
     private int nRows = 10; // todo do it better with levels
     private int nCols = 7; // todo do it better  with levels
 
@@ -26,6 +28,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         // make game panel focusable so it can handle events
         setFocusable(true);
+        setClickable(true);
     }
 
     @Override
@@ -41,9 +44,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             int row = (int) event.getX() / this.grid.getCellWidth();
             int col = (int) event.getY() / this.grid.getCellHeight();
             this.grid.activatePoint(row, col);
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            Log.d("TAG", "Coords: x=" + event.getAction());
         }
+
         return super.onTouchEvent(event);
     }
+
+//    @Override
+//    public boolean onScrollChanged(int l, int t, int oldl, int oldt) {
+//
+//        return super.onScrollChanged(l, t, oldl, oldt);
+//    }
+
+//    @Override
+//    public boolean onScroll(MotionEvent e1, MotionEvent e2,
+//                            float distanceX, float distanceY) {
+//        return true;
+//    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -90,4 +108,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void update() {
 
     }
+
+//    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+//        private static final String DEBUG_TAG = "Gestures";
+//
+//        @Override
+//        public boolean onDown(MotionEvent event) {
+//            Log.d(DEBUG_TAG, "onDown: " + event.toString());
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onScroll(MotionEvent event1, MotionEvent event2,
+//                               float distanceX, float distanceY) {
+//            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
+//            return true;
+//        }
+//    }
 }
