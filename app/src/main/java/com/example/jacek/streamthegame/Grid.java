@@ -3,14 +3,11 @@ package com.example.jacek.streamthegame;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Created by jacek on 11/12/2015.
@@ -63,44 +60,59 @@ public class Grid {
 //            obj.draw(canvas, 0 ,0);
 //        }
 
-        Paint paint = new Paint();
-        paint.setColor(Color.GRAY);
-        for (Point point : this.activeCells) {
-            int startX = point.x * this.cellWidth;
-            int startY = point.y * this.cellHeight;
-            canvas.drawRect(
-                    startX, // start x
-                    startY,  // start y
-                    startX + this.cellWidth, // end x
-                    startY + this.cellHeight, // end y
-                    paint);
-        }
+//        Paint paint = new Paint();
+//        paint.setColor(Color.GRAY);
+//        for (Point point : this.activeCells) {
+//            int startX = point.x * this.cellWidth;
+//            int startY = point.y * this.cellHeight;
+//            canvas.drawRect(
+//                    startX, // start x
+//                    startY,  // start y
+//                    startX + this.cellWidth, // end x
+//                    startY + this.cellHeight, // end y
+//                    paint);
+//        }
 
-        paint.setColor(Color.RED);
+//        paint.setColor(Color.RED);
+//        HashSet<GameObject> drawn = new HashSet<>();
+//        for(int i = 0; i < this.nRows * this.nCols; ++i)  {
+//            GameObject item = this.currentLayout[i];
+//            if (item != null && !drawn.contains(item)) {
+//                int row = i / this.nCols;
+//                int col = i % this.nCols;
+//                canvas.drawRect(
+//                        col * this.cellWidth,
+//                        row * this.cellHeight,
+//                        (col + item.getWidthCells()) * this.cellWidth,
+//                        (row + item.getHeightCells()) * this.cellHeight,
+//                        paint
+//                );
+//                drawn.add(item);
+//            }
+//        }
+
+        // todo maybe remove this.objects and use currentLayout instead
+//        for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
+//            canvas.drawBitmap(
+//                    entry.getKey().getImage(),
+//                    this.cellWidth * entry.getValue().y,
+//                    this.cellHeight * entry.getValue().x,
+//                    null);
+//        }
         HashSet<GameObject> drawn = new HashSet<>();
-        for(int i = 0; i < this.nRows * this.nCols; ++i)  {
-            GameObject item = this.currentLayout[i];
+        for (int i = 0; i < this.nRows * this.nCols; ++i) {
+            GameObject item = currentLayout[i];
             if (item != null && !drawn.contains(item)) {
                 int row = i / this.nCols;
                 int col = i % this.nCols;
-                canvas.drawRect(
-                        col * this.cellWidth,
-                        row * this.cellHeight,
-                        (col + item.getWidthCells()) * this.cellWidth,
-                        (row + item.getHeightCells()) * this.cellHeight,
-                        paint
-                );
+                // draw Object
+                canvas.drawBitmap(
+                    item.getImage(),
+                    this.cellWidth * col,
+                    this.cellHeight * row,
+                    null);
                 drawn.add(item);
             }
-        }
-
-        // todo maybe remove this.objects and use currentLayout instead
-        for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
-            canvas.drawBitmap(
-                    entry.getKey().getImage(),
-                    this.cellWidth * entry.getValue().y,
-                    this.cellHeight * entry.getValue().x,
-                    null);
         }
     }
 
@@ -130,7 +142,7 @@ public class Grid {
                         1, 2,
                         this.cellWidth, this.cellHeight);
                 this.objects.put(pipe, point);
-                this.addToLayout(pipe, row, col, pipe.getWidthCells(), pipe.getHeightCells());
+                this.addToLayout(pipe, row, col);
                 break;
             case rotated_short_pipe:
                 pipe = new GameObject(BitmapFactory.decodeResource(
@@ -139,9 +151,21 @@ public class Grid {
                         1, 2,
                         this.cellWidth, this.cellHeight);
                 pipe.rotate();
-                this.objects.put(pipe, point);
+                //this.objects.put(pipe, point);
                 break;
             default: break;
+        }
+    }
+
+    public GameObject getObjectFromCoords(int row, int col) {
+        return this.currentLayout[row*this.nCols + col];
+    }
+
+    public void removeObject(GameObject obj) {
+        for (int i = 0; i < this.nRows * this.nCols; ++i) {
+            if(this.currentLayout[i] == obj) {
+                this.currentLayout[i] = null;
+            }
         }
     }
 
@@ -149,10 +173,11 @@ public class Grid {
      * @param object: object to add to layout.
      * @param row: x coordinate of the upper left corner of the object.
      * @param col: y coordinate of the upper left corner of the object.
-     * @param width: how many cells this object occupies in x-direction.
-     * @param height: how many cells this object occupies in y-direction.
      * */
-    private void addToLayout(GameObject object, int row, int col, int width, int height) {
+    public void addToLayout(GameObject object, int row, int col) {
+        int width = object.getWidthCells();
+        int height = object.getHeightCells();
+        // width and height are properties of an object
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 int pos = (row + i)*this.nCols + (col+j);

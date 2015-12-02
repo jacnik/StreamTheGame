@@ -2,7 +2,6 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,6 +17,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private int nRows = 10; // todo do it better with levels
     private int nCols = 7; // todo do it better  with levels
 
+    private int lastRow = 0; // used for moving objects
+    private int lastCol = 0; // used for moving objects
+    private GameObject lastObj; // used for moving objects
 
     public GamePanel(Context context) {
         super(context);
@@ -28,7 +30,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         // make game panel focusable so it can handle events
         setFocusable(true);
-        setClickable(true);
+        setClickable(true); // allows to handle ACTION_MOVE event
     }
 
     @Override
@@ -41,27 +43,32 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 //            } else {
 //                Log.d("TAG", "Coords: x=" + event.getX() + ",y=" + event.getY());
 //            }
-            int row = (int) event.getX() / this.grid.getCellWidth();
-            int col = (int) event.getY() / this.grid.getCellHeight();
-            this.grid.activatePoint(row, col);
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            Log.d("TAG", "Coords: x=" + event.getAction());
-        }
+            int row = (int) event.getY() / this.grid.getCellHeight();
+            int col = (int) event.getX() / this.grid.getCellWidth();
+            //this.grid.activatePoint(row, col);
+            this.lastObj = this.grid.getObjectFromCoords(row, col);
+            if (this.lastObj != null) {
+                this.lastRow = row;
+                this.lastCol = col;
+            }
 
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            //Log.d("TAG", "Coords: x=" + event.getAction());
+            if (lastObj != null) {
+                int newRow = (int) event.getY() / this.grid.getCellHeight();
+                int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
+                if (newRow != this.lastRow || newCol != this.lastCol) {
+                    this.grid.removeObject(this.lastObj);
+                    this.grid.addToLayout(this.lastObj, newRow, newCol);
+                }
+            }
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            //Log.d("TAG", "Coords: x=" + event.getAction());
+            this.lastObj = null;
+        }
         return super.onTouchEvent(event);
     }
 
-//    @Override
-//    public boolean onScrollChanged(int l, int t, int oldl, int oldt) {
-//
-//        return super.onScrollChanged(l, t, oldl, oldt);
-//    }
-
-//    @Override
-//    public boolean onScroll(MotionEvent e1, MotionEvent e2,
-//                            float distanceX, float distanceY) {
-//        return true;
-//    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
