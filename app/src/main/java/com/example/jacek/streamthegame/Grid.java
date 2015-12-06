@@ -41,64 +41,7 @@ public class Grid {
     }
 
     public void draw(Canvas canvas) {
-//        for(int i = 0; i < this.nRows * this.nCols; ++i) {
-//            PointObject item = this.activeCells[i];
-//            if (item == null) {
-//                // create new item
-//                int col = i / this.nCols;
-//                int row = i % this.nCols;
-//                item = new PointObject(
-//                        col * this.cellWidth + this.cellWidth/2,
-//                        row * this.cellHeight + this.cellHeight/2);
-//                this.activeCells[i] = item;
-//            }
-//            // redraw item
-//            item.draw(canvas);
-//        }
 
-//        for(GameObject obj : this.objects.keySet()) {
-//            obj.draw(canvas, 0 ,0);
-//        }
-
-//        Paint paint = new Paint();
-//        paint.setColor(Color.GRAY);
-//        for (Point point : this.activeCells) {
-//            int startX = point.x * this.cellWidth;
-//            int startY = point.y * this.cellHeight;
-//            canvas.drawRect(
-//                    startX, // start x
-//                    startY,  // start y
-//                    startX + this.cellWidth, // end x
-//                    startY + this.cellHeight, // end y
-//                    paint);
-//        }
-
-//        paint.setColor(Color.RED);
-//        HashSet<GameObject> drawn = new HashSet<>();
-//        for(int i = 0; i < this.nRows * this.nCols; ++i)  {
-//            GameObject item = this.currentLayout[i];
-//            if (item != null && !drawn.contains(item)) {
-//                int row = i / this.nCols;
-//                int col = i % this.nCols;
-//                canvas.drawRect(
-//                        col * this.cellWidth,
-//                        row * this.cellHeight,
-//                        (col + item.getWidthCells()) * this.cellWidth,
-//                        (row + item.getHeightCells()) * this.cellHeight,
-//                        paint
-//                );
-//                drawn.add(item);
-//            }
-//        }
-
-        // todo maybe remove this.objects and use currentLayout instead
-//        for(Map.Entry<GameObject, Point> entry : this.objects.entrySet()) {
-//            canvas.drawBitmap(
-//                    entry.getKey().getImage(),
-//                    this.cellWidth * entry.getValue().y,
-//                    this.cellHeight * entry.getValue().x,
-//                    null);
-//        }
         HashSet<GameObject> drawn = new HashSet<>();
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject item = currentLayout[i];
