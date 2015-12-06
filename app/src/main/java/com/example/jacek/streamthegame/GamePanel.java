@@ -14,8 +14,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private Grid grid;
 
-    private int nRows = 10; // todo do it better with levels
-    private int nCols = 7; // todo do it better  with levels
+    private int nRows = 7; // todo do it better with levels
+    private int nCols = 10; // todo do it better  with levels
 
     private int lastRow = 0; // used for moving objects
     private int lastCol = 0; // used for moving objects
@@ -74,7 +74,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
 
         this.grid = new Grid(this.getContext(), this.nRows, this.nCols,
-                getWidth()/this.nRows, getHeight()/this.nCols); // todo: implement levels
+                getWidth()/this.nCols, getHeight()/this.nRows); // todo: implement levels
 
         //this.grid.tryAddObject(Sprite.short_pipe, 0, 0);
         this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
