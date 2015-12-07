@@ -3,7 +3,6 @@ package com.example.jacek.streamthegame;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Point;
 
 import java.util.HashSet;
 
@@ -73,25 +72,39 @@ public class Grid {
     }
 
     public void tryAddObject(Sprite sprite, int row, int col ) {
-        GameObject pipe;
-        Point point = new Point(row, col);
+        GameObject obj;
+        //Point point = new Point(row, col);
         switch (sprite) {
+            case exit:
+                obj = new GameObject(BitmapFactory.decodeResource(
+                        this.context.getResources(),
+                        R.drawable.exit_valve_arrow),
+                        1, 1, this.cellWidth, this.cellHeight);
+                this.addToLayout(obj, row, col);
+                break;
+            case enter:
+                obj = new GameObject(BitmapFactory.decodeResource(
+                        this.context.getResources(),
+                        R.drawable.enter_valve_arrow),
+                        1, 1, this.cellWidth, this.cellHeight);
+                this.addToLayout(obj, row, col);
+                break;
             case short_pipe:
-                pipe = new GameObject(BitmapFactory.decodeResource(
+                obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.short_pipe),
                         1, 2,
                         this.cellWidth, this.cellHeight);
                 //this.objects.put(pipe, point);
-                this.addToLayout(pipe, row, col);
+                this.addToLayout(obj, row, col);
                 break;
             case rotated_short_pipe:
-                pipe = new GameObject(BitmapFactory.decodeResource(
+                obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.short_pipe),
                         1, 2,
                         this.cellWidth, this.cellHeight);
-                pipe.rotate();
+                obj.rotate();
                 //this.objects.put(pipe, point);
                 break;
             default: break;

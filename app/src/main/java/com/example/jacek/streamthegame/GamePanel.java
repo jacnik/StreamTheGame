@@ -30,7 +30,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
 
-
         // make game panel focusable so it can handle events
         setFocusable(true);
         setClickable(true); // allows to handle ACTION_MOVE event
@@ -80,8 +79,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         this.grid = new Grid(this.getContext(), this.nRows, this.nCols,
                 getWidth()/this.nCols, getHeight()/this.nRows); // todo: implement levels
 
-        this.grid.tryAddObject(Sprite.short_pipe, 0, 0);
+        this.grid.tryAddObject(Sprite.exit, 0, 0);
+        this.grid.tryAddObject(Sprite.enter, 6, 9);
         this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
+        this.grid.tryAddObject(Sprite.short_pipe, 3, 4);
         //this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 1);
         //this.grid.tryAddObject(Sprite.rotated_short_pipe, 2, 3);
 
