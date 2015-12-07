@@ -102,6 +102,15 @@ public class Grid {
         return this.currentLayout[row*this.nCols + col];
     }
 
+    public void rotateObjAt(int row, int col) {
+        GameObject obj = this.getObjectFromCoords(row, col);
+        if (obj != null) {
+            this.removeObject(obj);
+            obj.rotate();
+            this.addToLayout(obj, row, col);
+        }
+    }
+
     public void removeObject(GameObject obj) {
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             if(this.currentLayout[i] == obj) {
@@ -119,8 +128,8 @@ public class Grid {
         int width = object.getWidthCells();
         int height = object.getHeightCells();
         // width and height are properties of an object
-        for (int i = 0; i < width; ++i) {
-            for (int j = 0; j < height; ++j) {
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
                 int pos = (row + i)*this.nCols + (col+j);
                 this.currentLayout[pos] = object;
             }
