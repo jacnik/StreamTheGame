@@ -2,6 +2,8 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.DragEvent;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,6 +23,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private int lastCol = 0; // used for moving objects
     private GameObject lastObj; // used for moving objects
 
+    final GestureDetector mGesDetect = new GestureDetector(getContext(), new GameGestureDetector());
+
     public GamePanel(Context context) {
         super(context);
         // add the callback to the surfaceholder to intercept events
@@ -28,45 +32,58 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
 
+
+
         // make game panel focusable so it can handle events
         setFocusable(true);
-        setClickable(true); // allows to handle ACTION_MOVE event
+        //setClickable(true); // allows to handle ACTION_MOVE event
+    }
+
+    @Override
+    public boolean onDragEvent(DragEvent event) {
+        //mGesDetect.
+        //mGesDetect.onGenericMotionEvent(event);
+        //mGesDetect.
+        return true;
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        //mGesDetect.onGenericMotionEvent(event);
+        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            if (event.getY() > getHeight() - 50) {
-                //this.thread.setRunning(false);
-                //((Activity)getContext()).finish();
-//            } else {
-//                Log.d("TAG", "Coords: x=" + event.getX() + ",y=" + event.getY());
-//            }
-            int row = (int) event.getY() / this.grid.getCellHeight();
-            int col = (int) event.getX() / this.grid.getCellWidth();
-            //this.grid.activatePoint(row, col);
-            this.lastObj = this.grid.getObjectFromCoords(row, col);
-            if (this.lastObj != null) {
-                this.lastRow = row;
-                this.lastCol = col;
-            }
+        mGesDetect.onTouchEvent(event);
+        return true;
 
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            //Log.d("TAG", "Coords: x=" + event.getAction());
-            if (lastObj != null) {
-                int newRow = (int) event.getY() / this.grid.getCellHeight();
-                int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
-                if (newRow != this.lastRow || newCol != this.lastCol) {
-                    this.grid.removeObject(this.lastObj);
-                    this.grid.addToLayout(this.lastObj, newRow, newCol);
-                }
-            }
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            //Log.d("TAG", "Coords: x=" + event.getAction());
-            this.lastObj = null;
-        }
-        return super.onTouchEvent(event);
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//
+//            int row = (int) event.getY() / this.grid.getCellHeight();
+//            int col = (int) event.getX() / this.grid.getCellWidth();
+//            //this.grid.activatePoint(row, col);
+//            this.lastObj = this.grid.getObjectFromCoords(row, col);
+//            if (this.lastObj != null) {
+//                this.lastRow = row;
+//                this.lastCol = col;
+//            }
+//
+//        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//
+//            if (lastObj != null) {
+//                int newRow = (int) event.getY() / this.grid.getCellHeight();
+//                int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
+//                if (newRow != this.lastRow || newCol != this.lastCol) {
+//                    this.grid.removeObject(this.lastObj);
+//                    this.grid.addToLayout(this.lastObj, newRow, newCol);
+//                }
+//            }
+//        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//            this.lastObj = null;
+//        }
+//        return super.onTouchEvent(event);
     }
 
 
@@ -116,20 +133,51 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-//    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-//        private static final String DEBUG_TAG = "Gestures";
-//
+    class GameGestureDetector extends GestureDetector.SimpleOnGestureListener {
+
 //        @Override
 //        public boolean onDown(MotionEvent event) {
-//            Log.d(DEBUG_TAG, "onDown: " + event.toString());
+//            //Log.d(DEBUG_TAG, "onDown: " + event.toString());
 //            return true;
 //        }
-//
+
 //        @Override
-//        public boolean onScroll(MotionEvent event1, MotionEvent event2,
-//                               float distanceX, float distanceY) {
-//            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
+//                 public boolean onGenericMotionEvent(MotionEvent ev) {
 //            return true;
 //        }
-//    }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+           // mGestureText.setText("onSingleTapConfirmed");
+            // rotate
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            //mGestureText.setText("onScroll");
+            int row = (int) e1.getY() / GamePanel.this.grid.getCellHeight();
+            int col = (int) e1.getX() / GamePanel.this.grid.getCellWidth();
+            GameObject obj = GamePanel.this.grid.getObjectFromCoords(row, col);
+            if (obj != null) {
+
+            }
+//            if (lastObj != null) {
+//                int newRow = (int) event.getY() / this.grid.getCellHeight();
+//                int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
+//                if (newRow != this.lastRow || newCol != this.lastCol) {
+//                    this.grid.removeObject(this.lastObj);
+//                    this.grid.addToLayout(this.lastObj, newRow, newCol);
+//                }
+//            }
+
+            return true;
+        }
+//        @Override
+//        public boolean onDoubleTap(MotionEvent e) {
+//            Log.d("TAG", "Double Tap Detected ...");
+//            return true;
+//        }
+    }
+
 }

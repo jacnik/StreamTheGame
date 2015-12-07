@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -27,8 +25,8 @@ public class Grid {
     private GameObject[] currentLayout; // todo maybe new class.
 
     private Context context;
-    private HashMap<GameObject, Point> objects = new HashMap<>();
-    private ArrayList<Point> activeCells = new ArrayList<>();
+   // private HashMap<GameObject, Point> objects = new HashMap<>();
+   // private ArrayList<Point> activeCells = new ArrayList<>();
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
         this.context = context;
@@ -63,7 +61,7 @@ public class Grid {
 //        this.activeCells[this.lastActivatedPoint].deactivate();
 //        this.lastActivatedPoint = row*this.nCols + col;
 //        this.activeCells[this.lastActivatedPoint].activate(); // todo overflow checking
-        this.activeCells.add(new Point(row, col));
+       //this.activeCells.add(new Point(row, col));
     }
 
     public int getCellWidth() {
@@ -84,7 +82,7 @@ public class Grid {
                         R.drawable.short_pipe),
                         1, 2,
                         this.cellWidth, this.cellHeight);
-                this.objects.put(pipe, point);
+                //this.objects.put(pipe, point);
                 this.addToLayout(pipe, row, col);
                 break;
             case rotated_short_pipe:
