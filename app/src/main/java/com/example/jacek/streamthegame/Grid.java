@@ -73,7 +73,6 @@ public class Grid {
 
     public void tryAddObject(Sprite sprite, int row, int col ) {
         GameObject obj;
-        //Point point = new Point(row, col);
         switch (sprite) {
             case exit:
                 obj = new GameObject(BitmapFactory.decodeResource(
@@ -106,6 +105,14 @@ public class Grid {
                         this.cellWidth, this.cellHeight);
                 obj.rotate();
                 //this.objects.put(pipe, point);
+                break;
+            case bend2:
+                obj = new GameObject(BitmapFactory.decodeResource(
+                        this.context.getResources(),
+                        R.drawable.bend2),
+                        2, 2,
+                        this.cellWidth, this.cellHeight);
+                this.addToLayout(obj, row, col);
                 break;
             default: break;
         }
@@ -141,10 +148,29 @@ public class Grid {
         int width = object.getWidthCells();
         int height = object.getHeightCells();
         // width and height are properties of an object
+
+        int[] insertionPoints = new int[height*width];
+        boolean insertSafe = true;
+
+        mainLoop:
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 int pos = (row + i)*this.nCols + (col+j);
-                this.currentLayout[pos] = object;
+                //this.currentLayout[pos] = object;
+                if (pos < this.nRows * this.nCols
+                       && this.currentLayout[pos] == null
+                        /* && add boundary detection */) {
+                    insertionPoints[i*width + j] = pos;
+                } else {
+                    insertSafe = false;
+                    break mainLoop;
+                }
+            }
+        }
+
+        if (insertSafe) {
+            for (int i = 0; i < height*width; ++i) {
+                this.currentLayout[insertionPoints[i]] = object;
             }
         }
     }
