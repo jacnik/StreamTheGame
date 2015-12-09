@@ -78,14 +78,15 @@ public class Grid {
                 obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.exit_valve_arrow),
-                        1, 1, this.cellWidth, this.cellHeight);
+                        1, 1, this.cellWidth, this.cellHeight, true);
                 this.addToLayout(obj, row, col);
                 break;
             case enter:
                 obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.enter_valve_arrow),
-                        1, 1, this.cellWidth, this.cellHeight);
+                        1, 1, this.cellWidth, this.cellHeight, true);
+                obj.rotate(); // todo: remove that and add separate enums for rotated objects
                 this.addToLayout(obj, row, col);
                 break;
             case short_pipe:

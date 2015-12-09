@@ -11,10 +11,12 @@ public class GameObject {
     private Bitmap image;
     private int widthCells, heightCells; // width and height in cell units!
     private int cellWidth, cellHeight;
+    private boolean isStatic;
 
     public GameObject(Bitmap image,
                       int widthCells, int heightCells,
-                      int cellWidth, int cellHeight) {
+                      int cellWidth, int cellHeight,
+                      boolean isStatic) {
         this.image = Bitmap.createScaledBitmap(
                 image,
                 widthCells * cellWidth,
@@ -24,6 +26,15 @@ public class GameObject {
         this.heightCells = heightCells;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
+        this.isStatic = isStatic;
+    }
+
+    public GameObject(Bitmap image,
+                      int widthCells, int heightCells,
+                      int cellWidth, int cellHeight) {
+
+        /* isStatic = false is the default */
+        this(image, widthCells, heightCells, cellWidth, cellHeight, false);
     }
 
 //    public void draw(Canvas canvas, int x, int y) {
@@ -42,6 +53,10 @@ public class GameObject {
 
     public int getHeightCells() {
         return  this.heightCells;
+    }
+
+    public boolean isStatic() {
+        return this.isStatic;
     }
 
 //    public void resize(int width, int height) {
