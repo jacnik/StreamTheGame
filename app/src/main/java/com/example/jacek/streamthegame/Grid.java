@@ -159,7 +159,9 @@ public class Grid {
                 //this.currentLayout[pos] = object;
                 if (pos < this.nRows * this.nCols
                        && this.currentLayout[pos] == null
-                        /* && add boundary detection */) {
+                        /* && add boundary detection
+                        * basically it will need to be something like
+                        * col + width < last column number in this row*/) {
                     insertionPoints[i*width + j] = pos;
                 } else {
                     insertSafe = false;
