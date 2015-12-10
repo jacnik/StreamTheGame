@@ -76,7 +76,7 @@ public class Grid {
         Exits exits;
         switch (sprite) {
             case exit:
-                exits = new Exits(0, 0, 0, 0, Direction.RIGTH, Direction.RIGTH, 1, 1);
+                exits = new Exits(0, 0, 0, 0, Direction.RIGHT, Direction.RIGHT, 1, 1);
                 obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.exit_valve_arrow),
@@ -84,7 +84,7 @@ public class Grid {
                 this.addToLayout(obj, row, col);
                 break;
             case enter:
-                exits = new Exits(0, 0, 0, 0, Direction.RIGTH, Direction.RIGTH, 1, 1);
+                exits = new Exits(0, 0, 0, 0, Direction.RIGHT, Direction.RIGHT, 1, 1);
                 obj = new GameObject(BitmapFactory.decodeResource(
                         this.context.getResources(),
                         R.drawable.enter_valve_arrow),
