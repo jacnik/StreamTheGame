@@ -24,8 +24,6 @@ public class Grid {
     private GameObject[] currentLayout; // todo maybe new class.
 
     private Context context;
-   // private HashMap<GameObject, Point> objects = new HashMap<>();
-   // private ArrayList<Point> activeCells = new ArrayList<>();
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
         this.context = context;
@@ -56,13 +54,6 @@ public class Grid {
         }
     }
 
-    public void activatePoint(int row, int col) {
-//        this.activeCells[this.lastActivatedPoint].deactivate();
-//        this.lastActivatedPoint = row*this.nCols + col;
-//        this.activeCells[this.lastActivatedPoint].activate(); // todo overflow checking
-       //this.activeCells.add(new Point(row, col));
-    }
-
     public int getCellWidth() {
         return this.cellWidth;
     }
@@ -81,6 +72,7 @@ public class Grid {
                         this.context.getResources(),
                         R.drawable.exit_valve_arrow),
                         1, 1, this.cellWidth, this.cellHeight, exits, true);
+                obj.setAnimation(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.exit_valve_spritesheet));
                 this.addToLayout(obj, row, col);
                 break;
             case enter:
@@ -126,6 +118,9 @@ public class Grid {
 
     public GameObject getObjectFromCoords(int row, int col) {
         GameObject res = this.currentLayout[row*this.nCols + col];
+
+        if (res != null) res.startAnimation(); //todo: remove
+
         if (res != null && res.isStatic()) { // check if res isStatic and return null if it is
             return null;
         }
@@ -183,6 +178,16 @@ public class Grid {
         if (insertSafe) {
             for (int i = 0; i < height*width; ++i) {
                 this.currentLayout[insertionPoints[i]] = object;
+            }
+        }
+    }
+
+    public void update() {
+        HashSet<GameObject> updated = new HashSet<>();
+        for (GameObject obj : this.currentLayout) {
+            if (obj != null && !updated.contains(obj)) {
+                obj.update();
+                updated.add(obj);
             }
         }
     }

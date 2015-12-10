@@ -15,6 +15,8 @@ public class GameObject {
     private Exits exits;
     private boolean isStatic;
 
+    private boolean isAnimating;
+    private Animation animation;
 
     public GameObject(Bitmap image,
                       int widthCells, int heightCells,
@@ -31,6 +33,7 @@ public class GameObject {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.isStatic = isStatic;
+        this.exits = exits;
     }
 
     public GameObject(Bitmap image,
@@ -45,10 +48,29 @@ public class GameObject {
 //        //canvas.drawBitmap(this.image, x, y, null);
 //    }
 
-//    public void update() {}
+    // todo: this is just a fast mockup for tomorrow's presentation.
+    // todo: note to self: Think this through when you will have more time next week
+    public void setExit() {
+
+    }
+
+    public void update() { this.animation.update();}
+
+    public void setAnimation(Bitmap spriteGrid) {
+        this.animation = new Animation(spriteGrid, this.heightCells, this.widthCells);
+    }
 
     public Bitmap getImage() {
-        return this.image;
+        if (this.isAnimating) {
+            // images from animation are not scaled
+            return Bitmap.createScaledBitmap(
+                    this.animation.getImage(),
+                    this.widthCells * this.cellWidth,
+                    this.heightCells * this.cellHeight,
+                    false);
+        } else {
+            return this.image;
+        }
     }
 
     public int getWidthCells() {
@@ -61,6 +83,10 @@ public class GameObject {
 
     public boolean isStatic() {
         return this.isStatic;
+    }
+
+    public void startAnimation() {
+        this.isAnimating = true;
     }
 
 //    public void resize(int width, int height) {
