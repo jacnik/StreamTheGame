@@ -120,7 +120,11 @@ public class Grid {
     }
 
     public GameObject getObjectFromCoords(int row, int col) {
-        return this.currentLayout[row*this.nCols + col];
+        GameObject res = this.currentLayout[row*this.nCols + col];
+        if (res != null && res.isStatic()) { // check if res isStatic and return null if it is
+            return null;
+        }
+        return res;
     }
 
     public void rotateObjAt(int row, int col) {

@@ -45,8 +45,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             int row = (int) event.getY() / this.grid.getCellHeight();
             int col = (int) event.getX() / this.grid.getCellWidth();
             //this.grid.activatePoint(row, col);
-            this.lastObj = this.grid.getObjectFromCoords(row, col); // todo: better than checking isStatic would be not to return static object from grid
-            if (this.lastObj != null && !this.lastObj.isStatic()) {
+            this.lastObj = this.grid.getObjectFromCoords(row, col);
+            if (this.lastObj != null) {
                 this.lastRow = row;
                 this.lastCol = col;
                 this.lastTap = System.nanoTime()/1000000;
@@ -54,7 +54,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
-            if (lastObj != null && !this.lastObj.isStatic()) { // todo: another isStatic check
+            if (lastObj != null) {
                 int newRow = (int) event.getY() / this.grid.getCellHeight();
                 int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
                 if (newRow != this.lastRow || newCol != this.lastCol) {
