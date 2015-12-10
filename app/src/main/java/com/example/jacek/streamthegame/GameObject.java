@@ -48,12 +48,6 @@ public class GameObject {
 //        //canvas.drawBitmap(this.image, x, y, null);
 //    }
 
-    // todo: this is just a fast mockup for tomorrow's presentation.
-    // todo: note to self: Think this through when you will have more time next week
-    public void setExit() {
-
-    }
-
     public void update() { this.animation.update();}
 
     public void setAnimation(Bitmap spriteGrid) {
@@ -88,14 +82,6 @@ public class GameObject {
     public void startAnimation() {
         this.isAnimating = true;
     }
-
-//    public void resize(int width, int height) {
-//        this.image = Bitmap.createScaledBitmap(
-//                this.image,
-//                this.widthCells * width,
-//                this.heightCells * height,
-//                false);
-//    }
 
     /* No additional parameters because only rotation 90 deg right is available */
     public void rotate() {

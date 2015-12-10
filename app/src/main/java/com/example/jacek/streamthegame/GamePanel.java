@@ -23,7 +23,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameObject lastObj; // used for moving objects
     private long lastTap; // used for short tap events
 
-    private boolean isAnimating = true;
+    private boolean isAnimating;
 
     public GamePanel(Context context) {
         super(context);
@@ -67,7 +67,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             if (System.nanoTime()/1000000 - this.lastTap < TAP_LENGTH) { // tap occurred
                 // rotate
-                this.grid.rotateObjAt(this.lastRow, this.lastCol);
+                this.isAnimating = true; // todo:remove
+                this.lastObj.startAnimation(); // todo:remove
+                //this.grid.rotateObjAt(this.lastRow, this.lastCol);
             }
             this.lastObj = null;
         }
@@ -83,7 +85,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         this.grid.tryAddObject(Sprite.exit, 1, 2);
         //this.grid.tryAddObject(Sprite.enter, 5, 6);
-        //this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
+        this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
         //this.grid.tryAddObject(Sprite.short_pipe, 3, 4);
         //this.grid.tryAddObject(Sprite.bend2, 5, 7);
 

@@ -27,7 +27,7 @@ public class Animation {
                     i*frameWidth*SPRITE_CELL_SIDE_PIXELS,
                     0,
                     frameWidth * SPRITE_CELL_SIDE_PIXELS,
-                    frameHeight * frameHeight * SPRITE_CELL_SIDE_PIXELS);
+                    frameHeight * SPRITE_CELL_SIDE_PIXELS);
         }
     }
     public void update() {
