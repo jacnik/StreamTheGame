@@ -44,10 +44,6 @@ public class GameObject {
         this(image, widthCells, heightCells, cellWidth, cellHeight, exits, false);
     }
 
-//    public void draw(Canvas canvas, int x, int y) {
-//        //canvas.drawBitmap(this.image, x, y, null);
-//    }
-
     public void update() { this.animation.update();}
 
     public void setAnimation(Bitmap spriteGrid) {

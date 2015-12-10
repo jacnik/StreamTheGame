@@ -13,7 +13,6 @@ public class Grid {
 
     private int nRows, nCols;
     private int cellWidth, cellHeight;
-    //private int lastActivatedPoint;
 
     // currentLayout maps all cells with object that are placed on them
     // from item number to coordinates:
