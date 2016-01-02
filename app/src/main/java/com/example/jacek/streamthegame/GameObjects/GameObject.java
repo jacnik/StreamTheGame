@@ -1,7 +1,10 @@
-package com.example.jacek.streamthegame;
+package com.example.jacek.streamthegame.GameObjects;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+
+import com.example.jacek.streamthegame.Animation;
+import com.example.jacek.streamthegame.Exits;
 
 
 /**

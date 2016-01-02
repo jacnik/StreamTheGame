@@ -6,6 +6,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.jacek.streamthegame.GameObjects.GameObject;
+
 /**
  * Created by jacek on 11/9/2015.
  */

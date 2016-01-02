@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import com.example.jacek.streamthegame.GameObjects.GameObject;
+
 import java.util.HashSet;
 
 /**
@@ -23,9 +25,12 @@ public class Grid {
     private GameObject[] currentLayout; // todo maybe new class.
 
     private Context context;
+    private GameObjectFactory gameObjectFactory;
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
-        this.context = context;
+        this.context = context; // TODO: replace context with gameobj factory
+        this.gameObjectFactory = new GameObjectFactory(context);
+
         this.nRows = rows;
         this.nCols = cols;
         this.cellWidth = cellWidth;
