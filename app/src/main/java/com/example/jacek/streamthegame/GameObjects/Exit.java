@@ -12,9 +12,9 @@ import com.example.jacek.streamthegame.R;
 /**
  * Created by jacek on 1/2/2016.
  */
-public class Enter extends GameObject {
+public class Exit extends GameObject {
 
-    public Enter(Context context, int cellWidth, int cellHeight) {
+    public Exit(Context context, int cellWidth, int cellHeight) {
         super(cellWidth, cellHeight);
         this.isStatic = true;
         this.widthCells = 1;
@@ -23,14 +23,14 @@ public class Enter extends GameObject {
         this.image = Bitmap.createScaledBitmap(
                 BitmapFactory.decodeResource(
                         context.getResources(),
-                        R.drawable.enter_valve_arrow),
+                        R.drawable.exit_valve_arrow),
                 widthCells * cellWidth,
                 heightCells * cellHeight,
                 false);
         this.animation = new Animation(
                 BitmapFactory.decodeResource(
                         context.getResources(),
-                        R.drawable.exit_valve_spritesheet), //todo create this spritesheet
+                        R.drawable.exit_valve_spritesheet),
                 this.heightCells, this.widthCells);
         this.exits = new Exits(
                 0, 0,

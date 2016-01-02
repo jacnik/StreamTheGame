@@ -1,7 +1,6 @@
 package com.example.jacek.streamthegame;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
@@ -29,7 +28,7 @@ public class Grid {
 
     public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
         this.context = context; // TODO: replace context with gameobj factory
-        this.gameObjectFactory = new GameObjectFactory(context);
+        this.gameObjectFactory = new GameObjectFactory(context, cellWidth, cellHeight); // todo check if removing cellWidth, cellHeight from Grid is possible
 
         this.nRows = rows;
         this.nCols = cols;
@@ -67,56 +66,9 @@ public class Grid {
     }
 
     public void tryAddObject(Sprite sprite, int row, int col ) {
-        GameObject obj;
-        Exits exits;
-        switch (sprite) {
-            case exit:
-                exits = new Exits(0, 0, 0, 0, Direction.RIGHT, Direction.RIGHT, 1, 1);
-                obj = new GameObject(BitmapFactory.decodeResource(
-                        this.context.getResources(),
-                        R.drawable.exit_valve_arrow),
-                        1, 1, this.cellWidth, this.cellHeight, exits, true);
-                obj.setAnimation(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.exit_valve_spritesheet));
-                this.addToLayout(obj, row, col);
-                break;
-            case enter:
-                exits = new Exits(0, 0, 0, 0, Direction.RIGHT, Direction.RIGHT, 1, 1);
-                obj = new GameObject(BitmapFactory.decodeResource(
-                        this.context.getResources(),
-                        R.drawable.enter_valve_arrow),
-                        1, 1, this.cellWidth, this.cellHeight, exits, true);
-                obj.rotate(); // todo: remove that and add separate enums for rotated objects
-                this.addToLayout(obj, row, col);
-                break;
-            case short_pipe:
-                exits = new Exits(0, 0, 1, 0, Direction.UP, Direction.DOWN, 1, 2);
-                obj = new GameObject(BitmapFactory.decodeResource(
-                        this.context.getResources(),
-                        R.drawable.short_pipe),
-                        1, 2,
-                        this.cellWidth, this.cellHeight, exits);
-                obj.setAnimation(BitmapFactory.decodeResource(this.context.getResources(), R.drawable.short_pipe_spritesheet));
-                this.addToLayout(obj, row, col);
-                break;
-            case rotated_short_pipe:
-//                obj = new GameObject(BitmapFactory.decodeResource(
-//                        this.context.getResources(),
-//                        R.drawable.short_pipe),
-//                        1, 2,
-//                        this.cellWidth, this.cellHeight);
-//                obj.rotate();
-                //this.objects.put(pipe, point);
-                break;
-            case bend2:
-                exits = new Exits(0, 1, 1, 0, Direction.UP, Direction.LEFT, 2, 2);
-                obj = new GameObject(BitmapFactory.decodeResource(
-                        this.context.getResources(),
-                        R.drawable.bend2),
-                        2, 2,
-                        this.cellWidth, this.cellHeight, exits);
-                this.addToLayout(obj, row, col);
-                break;
-            default: break;
+        GameObject obj = this.gameObjectFactory.getObject(sprite);
+        if (obj != null) {
+            this.addToLayout(obj, row, col);
         }
     }
 

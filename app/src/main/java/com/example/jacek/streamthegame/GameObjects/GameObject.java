@@ -10,48 +10,52 @@ import com.example.jacek.streamthegame.Exits;
 /**
  * Created by jacek on 11/15/2015.
  */
-public class GameObject {
-    private Bitmap image;
-    private int widthCells, heightCells; // width and height in cell units!
-    private int cellWidth, cellHeight;
+public abstract class GameObject {
+    protected Bitmap image;
+    protected int widthCells, heightCells; // width and height in cell units!
+    protected int cellWidth, cellHeight;
 
-    private Exits exits;
-    private boolean isStatic;
+    protected Exits exits;
+    protected boolean isStatic;
 
-    private boolean isAnimating;
-    private Animation animation;
+    protected boolean isAnimating; // default is false
+    protected Animation animation;
 
-    public GameObject(Bitmap image,
-                      int widthCells, int heightCells,
-                      int cellWidth, int cellHeight,
-                      Exits exits,
-                      boolean isStatic) {
-        this.image = Bitmap.createScaledBitmap(
-                image,
-                widthCells * cellWidth,
-                heightCells * cellHeight,
-                false);
-        this.widthCells = widthCells;
-        this.heightCells = heightCells;
+    protected GameObject(int cellWidth, int cellHeight) {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
-        this.isStatic = isStatic;
-        this.exits = exits;
     }
+//    public GameObject(Bitmap image,
+//                      int widthCells, int heightCells,
+//                      int cellWidth, int cellHeight,
+//                      Exits exits,
+//                      boolean isStatic) {
+//        this.image = Bitmap.createScaledBitmap(
+//                image,
+//                widthCells * cellWidth,
+//                heightCells * cellHeight,
+//                false);
+//        this.widthCells = widthCells;
+//        this.heightCells = heightCells;
+//        this.cellWidth = cellWidth;
+//        this.cellHeight = cellHeight;
+//        this.isStatic = isStatic;
+//        this.exits = exits;
+//    }
 
-    public GameObject(Bitmap image,
-                      int widthCells, int heightCells,
-                      int cellWidth, int cellHeight, Exits exits) {
-
-        /* isStatic = false is the default */
-        this(image, widthCells, heightCells, cellWidth, cellHeight, exits, false);
-    }
+//    public GameObject(Bitmap image,
+//                      int widthCells, int heightCells,
+//                      int cellWidth, int cellHeight, Exits exits) {
+//
+//        /* isStatic = false is the default */
+//        this(image, widthCells, heightCells, cellWidth, cellHeight, exits, false);
+//    }
 
     public void update() { this.animation.update();}
 
-    public void setAnimation(Bitmap spriteGrid) {
-        this.animation = new Animation(spriteGrid, this.heightCells, this.widthCells);
-    }
+//    public void setAnimation(Bitmap spriteGrid) {
+//        this.animation = new Animation(spriteGrid, this.heightCells, this.widthCells);
+//    }
 
     public Bitmap getImage() {
         if (this.isAnimating) {
