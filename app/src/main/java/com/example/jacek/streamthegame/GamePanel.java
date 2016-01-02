@@ -46,7 +46,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             int row = (int) event.getY() / this.grid.getCellHeight();
             int col = (int) event.getX() / this.grid.getCellWidth();
-            //this.grid.activatePoint(row, col);
+
             this.lastObj = this.grid.getObjectFromCoords(row, col);
             if (this.lastObj != null) {
                 this.lastRow = row;
@@ -67,9 +67,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             if (System.nanoTime()/1000000 - this.lastTap < TAP_LENGTH) { // tap occurred
                 // rotate
-                this.isAnimating = true; // todo:remove
-                this.lastObj.startAnimation(); // todo:remove
-                //this.grid.rotateObjAt(this.lastRow, this.lastCol);
+                //this.isAnimating = true; // todo:remove
+                //this.lastObj.startAnimation(); // todo:remove
+                this.grid.rotateObjAt(this.lastRow, this.lastCol);
             }
             this.lastObj = null;
         }
@@ -84,10 +84,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 getWidth()/this.nCols, getHeight()/this.nRows); // todo: implement levels
 
         this.grid.tryAddObject(Sprite.exit, 1, 2);
-        //this.grid.tryAddObject(Sprite.enter, 5, 6);
+        this.grid.tryAddObject(Sprite.enter, 5, 6);
         this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
-        //this.grid.tryAddObject(Sprite.short_pipe, 3, 4);
-        //this.grid.tryAddObject(Sprite.bend2, 5, 7);
+        this.grid.tryAddObject(Sprite.short_pipe, 3, 4);
+        this.grid.tryAddObject(Sprite.bend2, 5, 7);
 
         //this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 1);
         //this.grid.tryAddObject(Sprite.rotated_short_pipe, 2, 3);
