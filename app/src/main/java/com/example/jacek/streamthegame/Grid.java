@@ -2,6 +2,7 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 
@@ -74,18 +75,19 @@ public class Grid {
 
     public GameObject getObjectFromCoords(int row, int col) {
         GameObject res = this.currentLayout[row*this.nCols + col];
-        if (res != null && res.isStatic()) { // check if res isStatic and return null if it is
-            return null;
-        }
+//        if (res != null && res.isStatic()) { // check if res isStatic and return null if it is
+//            return null;
+//        }
         return res;
     }
 
     public void rotateObjAt(int row, int col) {
         GameObject obj = this.getObjectFromCoords(row, col);
         if (obj != null) {
+            Point startCoords = this.getStartCoords(row, col);
             this.removeObject(obj);
             obj.rotate();
-            this.addToLayout(obj, row, col);
+            this.addToLayout(obj, startCoords.x, startCoords.y);
         }
     }
 
@@ -143,6 +145,30 @@ public class Grid {
                 updated.add(obj);
             }
         }
+    }
+
+    /**
+     * return upper left corner coordinates of an object from row and col
+     * @return Point object: x = row, y = col
+     * */
+    private Point getStartCoords(int row, int col) {
+        GameObject obj = this.getObjectFromCoords(row, col);
+        if(obj == null) return new Point(row, col);
+
+        // first check up
+        for(int r = row - 1; r >= 0; --r) {
+            if (this.getObjectFromCoords(r, col) == obj) {
+                row = r;
+            } else break;
+        }
+        // then check left
+        for(int c = col - 1; c >= 0; --c) {
+            if (this.getObjectFromCoords(row, c) == obj) {
+                col = c;
+            } else break;
+        }
+
+        return new Point(row, col);
     }
 
     private void clearLayout() {

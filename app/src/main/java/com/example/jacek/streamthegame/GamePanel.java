@@ -78,7 +78,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return super.onTouchEvent(event);
     }
 
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
@@ -130,5 +129,4 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             this.grid.update();
         }
     }
-
 }
