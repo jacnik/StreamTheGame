@@ -58,7 +58,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
-            if (lastObj != null) {
+            if (this.lastObj != null && !this.lastObj.isStatic()) {
                 int newRow = (int) event.getY() / this.grid.getCellHeight();
                 int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
                 if (newRow != this.lastRow || newCol != this.lastCol) {
@@ -67,12 +67,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (System.nanoTime()/1000000 - this.lastTap < TAP_LENGTH) { // tap occurred
-                // rotate
+            /* if tap event occurred */
+            if (System.nanoTime()/1000000 - this.lastTap < TAP_LENGTH) {
+                if (this.lastObj != null && !this.lastObj.isStatic()) {
+                    // rotate
+                    this.grid.rotateObjAt(this.lastRow, this.lastCol);
+                }
+                // else if last obj is exit then start animation
                 //this.isAnimating = true; // todo:remove
                 //this.lastObj.startAnimation(); // todo:remove
-                this.grid.rotateObjAt(this.lastRow, this.lastCol);
             }
+
             this.lastObj = null;
         }
         return super.onTouchEvent(event);

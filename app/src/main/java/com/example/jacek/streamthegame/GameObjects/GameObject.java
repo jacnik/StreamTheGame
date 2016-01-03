@@ -18,7 +18,7 @@ public abstract class GameObject {
     protected Exits exits;
     protected boolean isStatic;
 
-    protected boolean isAnimating; // default is false
+    protected boolean isAnimating;
     protected Animation animation;
 
     protected GameObject(int cellWidth, int cellHeight) {
