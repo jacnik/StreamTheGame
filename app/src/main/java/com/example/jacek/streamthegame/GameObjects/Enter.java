@@ -8,6 +8,7 @@ import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.R;
+import com.example.jacek.streamthegame.Sprite;
 
 /**
  * Created by jacek on 1/2/2016.
@@ -30,12 +31,17 @@ public class Enter extends GameObject {
         this.animation = new Animation(
                 BitmapFactory.decodeResource(
                         context.getResources(),
-                        R.drawable.exit_valve_spritesheet), //todo create this spritesheet
+                        R.drawable.exit_valve_spritesheet), //todo create enter spritesheet
                 this.heightCells, this.widthCells);
         this.exits = new Exits(
                 0, 0,
                 0, 0,
                 Direction.RIGHT, Direction.RIGHT,
                 this.widthCells, this.heightCells);
+    }
+
+    @Override
+    public Sprite getType() {
+        return Sprite.enter;
     }
 }

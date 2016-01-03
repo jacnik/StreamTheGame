@@ -78,10 +78,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if (this.lastObj != null && !this.lastObj.isStatic()) {
                     // rotate
                     this.grid.rotateObjAt(this.lastRow, this.lastCol);
+                } else if (this.lastObj != null && this.lastObj.getType() == Sprite.exit){
+                    /* else if last obj is exit then start animation */
+                    this.lastObj.startAnimation();
+                    this.isAnimating = true;
                 }
-                // else if last obj is exit then start animation
-                //this.isAnimating = true; // todo:remove
-                //this.lastObj.startAnimation(); // todo:remove
             }
 
             this.lastObj = null;

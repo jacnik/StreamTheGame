@@ -8,6 +8,7 @@ import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.R;
+import com.example.jacek.streamthegame.Sprite;
 
 /**
  * Created by jacek on 1/2/2016.
@@ -36,5 +37,10 @@ public class ShortPipe extends GameObject {
                 1, 0,
                 Direction.UP, Direction.DOWN,
                 this.widthCells, this.heightCells);
+    }
+
+    @Override
+    public Sprite getType() {
+        return Sprite.short_pipe;
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Matrix;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Exits;
+import com.example.jacek.streamthegame.Sprite;
 
 
 /**
@@ -25,37 +26,10 @@ public abstract class GameObject {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
     }
-//    public GameObject(Bitmap image,
-//                      int widthCells, int heightCells,
-//                      int cellWidth, int cellHeight,
-//                      Exits exits,
-//                      boolean isStatic) {
-//        this.image = Bitmap.createScaledBitmap(
-//                image,
-//                widthCells * cellWidth,
-//                heightCells * cellHeight,
-//                false);
-//        this.widthCells = widthCells;
-//        this.heightCells = heightCells;
-//        this.cellWidth = cellWidth;
-//        this.cellHeight = cellHeight;
-//        this.isStatic = isStatic;
-//        this.exits = exits;
-//    }
 
-//    public GameObject(Bitmap image,
-//                      int widthCells, int heightCells,
-//                      int cellWidth, int cellHeight, Exits exits) {
-//
-//        /* isStatic = false is the default */
-//        this(image, widthCells, heightCells, cellWidth, cellHeight, exits, false);
-//    }
+    public abstract Sprite getType();
 
     public void update() { this.animation.update();}
-
-//    public void setAnimation(Bitmap spriteGrid) {
-//        this.animation = new Animation(spriteGrid, this.heightCells, this.widthCells);
-//    }
 
     public Bitmap getImage() {
         if (this.isAnimating) {
