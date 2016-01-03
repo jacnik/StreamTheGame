@@ -75,9 +75,6 @@ public class Grid {
 
     public GameObject getObjectFromCoords(int row, int col) {
         GameObject res = this.currentLayout[row*this.nCols + col];
-//        if (res != null && res.isStatic()) { // check if res isStatic and return null if it is
-//            return null;
-//        }
         return res;
     }
 
@@ -88,6 +85,21 @@ public class Grid {
             this.removeObject(obj);
             obj.rotate();
             this.addToLayout(obj, startCoords.x, startCoords.y);
+        }
+    }
+
+    /**
+     * @param drow: movement in y-axis: + row down, - row up
+     * @param dcol: movement in x-axis: + col right, - col left
+     * */
+    public void moveObjAt(int row, int col, int drow, int dcol) {
+        GameObject obj = this.getObjectFromCoords(row, col);
+        if (obj != null) {
+            Point startCoords = this.getStartCoords(row, col);
+            if (!this.checkObjCollision(startCoords.x, startCoords.y, drow, dcol)) {
+                this.removeObject(obj);
+                this.addToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
+            }
         }
     }
 
@@ -169,6 +181,44 @@ public class Grid {
         }
 
         return new Point(row, col);
+    }
+
+    /**
+     * Important note: assumes that srow and scol are coordinates
+     * of the upper left corner of an object
+     *
+     * @param srow: start (upper left) row
+     * @param scol: start (upper left) col
+     * @param drow: movement in y-axis: + row down, - row up
+     * @param dcol: movement in x-axis: + col right, - col left
+     * @returns:
+     * true = collision detected
+     * false = collision not detected
+     * */
+    private boolean checkObjCollision(int srow, int scol, int drow, int dcol) {
+        GameObject obj = this.getObjectFromCoords(srow, scol);
+        int width = obj.getWidthCells();
+        int height = obj.getHeightCells();
+
+        int row = srow + drow; // new insertion row
+        int col = scol + dcol; // new insertion col
+
+        // check boundaries
+        if (row + height > this.nRows) return true;
+        if (col + width > this.nCols) return true;
+
+        // check if all cells occupied by object are empty
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                int pos = (row + i)*this.nCols + (col+j);
+                if (this.currentLayout[pos] != null && this.currentLayout[pos] != obj) {
+                    return true;
+                }
+            }
+        }
+
+        // if checks above didn't find a collision there is none
+        return false;
     }
 
     private void clearLayout() {

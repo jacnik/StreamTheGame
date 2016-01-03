@@ -60,10 +60,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             if (this.lastObj != null && !this.lastObj.isStatic()) {
                 int newRow = (int) event.getY() / this.grid.getCellHeight();
-                int newCol = (int) event.getX() / this.grid.getCellWidth(); // event.getHistoricalX(); maybe able to replace this.lastRow
+                int newCol = (int) event.getX() / this.grid.getCellWidth();
                 if (newRow != this.lastRow || newCol != this.lastCol) {
-                    this.grid.removeObject(this.lastObj);
-                    this.grid.addToLayout(this.lastObj, newRow, newCol);
+                    //this.grid.removeObject(this.lastObj);
+                    //this.grid.addToLayout(this.lastObj, newRow, newCol);
+                    this.grid.moveObjAt(
+                            this.lastRow, this.lastCol,
+                            newRow - this.lastRow, newCol - this.lastCol);
                 }
             }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
