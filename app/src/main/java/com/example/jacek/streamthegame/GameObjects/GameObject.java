@@ -74,8 +74,9 @@ public abstract class GameObject {
         this.widthCells = this.heightCells;
         this.heightCells = tmp;
 
-        // rotate exits
+        // rotate exits and animation
         this.exits.rotate();
+        this.animation.rotate();
 
         // resize the image so it fits new dimensions
         this.image = Bitmap.createScaledBitmap(
