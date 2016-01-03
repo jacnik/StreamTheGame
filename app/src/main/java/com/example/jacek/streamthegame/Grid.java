@@ -89,18 +89,23 @@ public class Grid {
     }
 
     /**
+     * @param row: row coordinate of the object to move.
+     * @param col: col coordinate of the object to move.
      * @param drow: movement in y-axis: + row down, - row up
      * @param dcol: movement in x-axis: + col right, - col left
+     * @return true if move was successful
      * */
-    public void moveObjAt(int row, int col, int drow, int dcol) {
+    public boolean moveObjAt(int row, int col, int drow, int dcol) {
         GameObject obj = this.getObjectFromCoords(row, col);
         if (obj != null) {
             Point startCoords = this.getStartCoords(row, col);
             if (!this.checkObjCollision(startCoords.x, startCoords.y, drow, dcol)) {
                 this.removeObject(obj);
-                this.addToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
+                this.saveAddToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
+                return true;
             }
         }
+        return false;
     }
 
     public void removeObject(GameObject obj) {
@@ -159,6 +164,24 @@ public class Grid {
         }
     }
 
+    /** Performs add to layout without any collision and boundary checks.
+     * Assumes that checks for save insert was performed prior to calling this function.
+     * @param object: object to add to layout.
+     * @param row: x coordinate of the upper left corner of the object.
+     * @param col: y coordinate of the upper left corner of the object.
+     * */
+    private void saveAddToLayout(GameObject object, int row, int col) {
+        int width = object.getWidthCells();
+        int height = object.getHeightCells();
+
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                int pos = (row + i)*this.nCols + (col+j);
+                this.currentLayout[pos] = object;
+            }
+        }
+    }
+
     /**
      * return upper left corner coordinates of an object from row and col
      * @return Point object: x = row, y = col
@@ -204,8 +227,9 @@ public class Grid {
         int col = scol + dcol; // new insertion col
 
         // check boundaries
-        if (row + height > this.nRows) return true;
-        if (col + width > this.nCols) return true;
+        if (row < 0 || row + height > this.nRows) return true;
+        if (col < 0 || col + width > this.nCols) return true;
+
 
         // check if all cells occupied by object are empty
         for (int i = 0; i < height; ++i) {
