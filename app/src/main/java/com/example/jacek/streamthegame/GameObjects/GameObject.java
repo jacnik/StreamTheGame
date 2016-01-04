@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 import com.example.jacek.streamthegame.Animation;
+import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.Sprite;
 
@@ -16,7 +17,10 @@ public abstract class GameObject {
     protected int widthCells, heightCells; // width and height in cell units!
     protected int cellWidth, cellHeight;
 
-    protected Exits exits;
+    protected Exits exits; // todo remove
+    protected Exit exit1;
+    protected Exit exit2;
+    private Exit animationStartExit;
     protected boolean isStatic;
 
     protected boolean isAnimating;
@@ -63,7 +67,8 @@ public abstract class GameObject {
         return this.isStatic;
     }
 
-    public void startAnimation() {
+    public void startAnimation(Exit exit) {
+        this.animationStartExit = exit;
         this.isAnimating = true;
     }
 
@@ -73,6 +78,14 @@ public abstract class GameObject {
 
     public boolean finishedAnimating() {
         return this.finishedAnimating;
+    }
+
+    public Exit getAnimationEndExit() {
+        if (this.animationStartExit == this.exit1) {
+            return this.exit1;
+        } else {
+            return this.exit2;
+        }
     }
 
     /* No additional parameters because only rotation 90 deg right is available */
@@ -89,9 +102,7 @@ public abstract class GameObject {
         this.widthCells = this.heightCells;
         this.heightCells = tmp;
 
-        // rotate exits and animation
-        this.exits.rotate();
-        this.animation.rotate(); // todo probably remove
+        this.rotateExits();
 
         // resize the image so it fits new dimensions
         this.image = Bitmap.createScaledBitmap(
@@ -99,5 +110,10 @@ public abstract class GameObject {
                 this.widthCells * this.cellWidth,
                 this.heightCells * this.cellHeight,
                 false);
+    }
+
+    private void rotateExits() {
+        this.exit1.rotate();
+        this.exit2.rotate();
     }
 }

@@ -36,7 +36,7 @@ public class Bend2 extends GameObject {
                 BitmapFactory.decodeResource(
                         context.getResources(),
                         R.drawable.short_pipe_spritesheet),
-                2, 1);
+                2, 1, Direction.LEFT);
         this.exits = new Exits(
                 0, 1,
                 1, 0,

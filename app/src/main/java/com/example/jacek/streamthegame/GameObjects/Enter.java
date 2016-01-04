@@ -32,7 +32,7 @@ public class Enter extends GameObject {
                 BitmapFactory.decodeResource(
                         context.getResources(),
                         R.drawable.exit_valve_spritesheet), //todo create enter spritesheet
-                this.heightCells, this.widthCells);
+                this.heightCells, this.widthCells, Direction.LEFT);
         this.exits = new Exits(
                 0, 0,
                 0, 0,

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.jacek.streamthegame.GameObjects.Bend2;
 import com.example.jacek.streamthegame.GameObjects.Enter;
-import com.example.jacek.streamthegame.GameObjects.Exit;
+import com.example.jacek.streamthegame.GameObjects.ExitObject;
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 import com.example.jacek.streamthegame.GameObjects.ShortPipe;
 
@@ -26,7 +26,7 @@ public class GameObjectFactory {
         GameObject obj = null;
         switch (sprite) {
             case exit:
-                obj = new Exit(this.context, this.cellWidth, this.cellHeight);
+                obj = new ExitObject(this.context, this.cellWidth, this.cellHeight);
                 break;
             case enter:
                 obj = new Enter(this.context, this.cellWidth, this.cellHeight);

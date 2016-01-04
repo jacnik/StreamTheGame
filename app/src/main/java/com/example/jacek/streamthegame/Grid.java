@@ -159,6 +159,7 @@ public class Grid {
             if (obj != null) {
                 if (obj.isAnimating() || obj.finishedAnimating()) {
                     this.updateAnimations(obj);
+                    break;
                 }
             }
         }
@@ -169,7 +170,31 @@ public class Grid {
             obj.update();
         } else if (obj.finishedAnimating()) {
             //find another object in chain to start animation on it
+
+            Exit exit = obj.getAnimationEndExit();
+            if (this.hasPairedExit(exit)) {}
+            // newObj = this.getPairedObject
+            // newObj.startAnimation(exit.getChainedExit())
         }
+    }
+
+    private boolean hasPairedExit(Exit exit) {
+        //GameObject oldObj = this.getObjectFromCoords()
+        int row, col;
+        switch(exit.getDir()) {
+            case LEFT:
+
+                break;
+            case UP:
+                break;
+            case RIGHT:
+                break;
+            case DOWN:
+                break;
+            default: return false;
+        }
+
+        return true;
     }
 
     /** Performs add to layout without any collision and boundary checks.

@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 public class Animation {
 
     public static final int ANIMATION_FRAMES = 9;
-    public static final int MAX_ROTATIONS = 9;
 
     // this means that each sprite has one cell 50x50 pixels
     public static final int SPRITE_CELL_SIDE_PIXELS = 50;
@@ -19,13 +18,14 @@ public class Animation {
     private long startTime;
     private long delay = 200; // todo
     private boolean playedOnce;
-    private int rotations = 0;
     private int frameHeight, frameWidth;
+    private Direction startDirection; // direction from which animation starts
 
-    public Animation(Bitmap spriteGrid, int frameHeight, int frameWidth) {
+    public Animation(Bitmap spriteGrid, int frameHeight, int frameWidth, Direction startDirection) {
         this.startTime = System.nanoTime();
         this.frameHeight = frameHeight * SPRITE_CELL_SIDE_PIXELS;
         this.frameWidth = frameWidth * SPRITE_CELL_SIDE_PIXELS;
+        this.startDirection = startDirection;
 
         for (int i = 0; i < ANIMATION_FRAMES; ++i) {
             this.frames[i] = Bitmap.createBitmap(
@@ -56,15 +56,11 @@ public class Animation {
 
     public Bitmap getImage() {
         Matrix matrix = new Matrix();
-        matrix.postRotate(90 * this.rotations);
+        matrix.postRotate(90);
 
         return Bitmap.createBitmap(
                 this.frames[this.currentFrame], 0, 0, this.frameWidth,
                 this.frameHeight, matrix, true);
-    }
-
-    public void rotate() {
-        this.rotations = (this.rotations + 1) % MAX_ROTATIONS;
     }
 
     public boolean playedOnce() {

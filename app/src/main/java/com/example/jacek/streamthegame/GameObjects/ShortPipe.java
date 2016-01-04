@@ -31,7 +31,7 @@ public class ShortPipe extends GameObject {
                 BitmapFactory.decodeResource(
                         context.getResources(),
                         R.drawable.short_pipe_spritesheet),
-                this.heightCells, this.widthCells);
+                this.heightCells, this.widthCells, Direction.UP);
         this.exits = new Exits(
                 0, 0,
                 1, 0,
