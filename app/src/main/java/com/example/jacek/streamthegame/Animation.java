@@ -3,6 +3,9 @@ package com.example.jacek.streamthegame;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jacek on 12/10/2015.
  */
@@ -13,6 +16,8 @@ public class Animation {
 
     // this means that each sprite has one cell 50x50 pixels
     public static final int SPRITE_CELL_SIDE_PIXELS = 50;
+
+    private List<AnimationFinishedListener> animationFinishedlisteners = new ArrayList<>(); // list of registered listeners
 
     private Bitmap[] frames = new Bitmap[ANIMATION_FRAMES];
     private int currentFrame;
@@ -50,7 +55,7 @@ public class Animation {
 
         if (this.currentFrame == ANIMATION_FRAMES) {
             this.playedOnce = true;
-            this.currentFrame = 8; // last frame will be shown after animation finishes
+            this.currentFrame = ANIMATION_FRAMES - 1; // last frame will be shown after animation finishes
         }
     }
 
@@ -68,4 +73,18 @@ public class Animation {
     }
 
     public void setDelay(long d) {this.delay = d;}
+
+    public synchronized void addEventListener(AnimationFinishedListener listener)  {
+        animationFinishedlisteners.add(listener);
+    }
+    public synchronized void removeEventListener(AnimationFinishedListener listener)   {
+        animationFinishedlisteners.remove(listener);
+    }
+
+    private synchronized void fireAnimationFinishedEvent() {
+        AnimationFinishedEventArgs args = new AnimationFinishedEventArgs(this);
+        for(AnimationFinishedListener handler : this.animationFinishedlisteners) {
+            handler.handleAnimationFinished(args);
+        }
+    }
 }
