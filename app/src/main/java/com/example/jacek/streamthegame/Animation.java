@@ -67,5 +67,9 @@ public class Animation {
         this.rotations = (this.rotations + 1) % MAX_ROTATIONS;
     }
 
+    public boolean playedOnce() {
+        return this.playedOnce;
+    }
+
     public void setDelay(long d) {this.delay = d;}
 }

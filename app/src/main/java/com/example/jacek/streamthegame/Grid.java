@@ -155,12 +155,20 @@ public class Grid {
     }
 
     public void update() {
-        HashSet<GameObject> updated = new HashSet<>();
         for (GameObject obj : this.currentLayout) {
-            if (obj != null && !updated.contains(obj)) {
-                obj.update();
-                updated.add(obj);
+            if (obj != null) {
+                if (obj.isAnimating() || obj.finishedAnimating()) {
+                    this.updateAnimations(obj);
+                }
             }
+        }
+    }
+
+    private void updateAnimations(GameObject obj) {
+        if (obj.isAnimating()) {
+            obj.update();
+        } else if (obj.finishedAnimating()) {
+            //find another object in chain to start animation on it
         }
     }
 

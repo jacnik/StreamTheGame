@@ -20,6 +20,7 @@ public abstract class GameObject {
     protected boolean isStatic;
 
     protected boolean isAnimating;
+    private boolean finishedAnimating;
     protected Animation animation;
 
     protected GameObject(int cellWidth, int cellHeight) {
@@ -29,7 +30,13 @@ public abstract class GameObject {
 
     public abstract Sprite getType();
 
-    public void update() { this.animation.update();}
+    public void update() {
+        if (this.animation.playedOnce()) {
+            this.finishedAnimating = true;
+        } else {
+            this.animation.update();
+        }
+    }
 
     public Bitmap getImage() {
         if (this.isAnimating) {
@@ -60,6 +67,14 @@ public abstract class GameObject {
         this.isAnimating = true;
     }
 
+    public boolean isAnimating() {
+        return this.isAnimating;
+    }
+
+    public boolean finishedAnimating() {
+        return this.finishedAnimating;
+    }
+
     /* No additional parameters because only rotation 90 deg right is available */
     public void rotate() {
         Matrix matrix = new Matrix();
@@ -76,7 +91,7 @@ public abstract class GameObject {
 
         // rotate exits and animation
         this.exits.rotate();
-        this.animation.rotate();
+        this.animation.rotate(); // todo probably remove
 
         // resize the image so it fits new dimensions
         this.image = Bitmap.createScaledBitmap(
