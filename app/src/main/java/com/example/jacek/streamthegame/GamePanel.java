@@ -80,7 +80,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     this.grid.rotateObjAt(this.lastRow, this.lastCol);
                 } else if (this.lastObj != null && this.lastObj.getType() == Sprite.exit){
                     /* else if last obj is exit then start animation */
-                    this.lastObj.startAnimation();
+                    this.lastObj.startAnimation(null);
                     this.isAnimating = true;
                 }
             }

@@ -9,4 +9,6 @@ public enum Direction {
     public Direction next() {
         return values()[(ordinal() + 1) % values().length];
     }
+
+    public Direction opposite() { return values()[(ordinal() + 2) % values().length]; }
 }

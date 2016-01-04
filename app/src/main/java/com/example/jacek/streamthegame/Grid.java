@@ -74,8 +74,7 @@ public class Grid {
     }
 
     public GameObject getObjectFromCoords(int row, int col) {
-        GameObject res = this.currentLayout[row*this.nCols + col];
-        return res;
+        return this.currentLayout[row*this.nCols + col];
     }
 
     public void rotateObjAt(int row, int col) {
@@ -101,7 +100,7 @@ public class Grid {
             Point startCoords = this.getStartCoords(row, col);
             if (!this.checkObjCollision(startCoords.x, startCoords.y, drow, dcol)) {
                 this.removeObject(obj);
-                this.saveAddToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
+                this.safeAddToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
                 return true;
             }
         }
@@ -155,46 +154,69 @@ public class Grid {
     }
 
     public void update() {
-        for (GameObject obj : this.currentLayout) {
+        for (int i = 0; i < this.nRows * this.nCols; ++i) {
+            GameObject obj = this.currentLayout[i];
             if (obj != null) {
                 if (obj.isAnimating() || obj.finishedAnimating()) {
-                    this.updateAnimations(obj);
+                    this.updateAnimations(obj, i);
                     break;
                 }
             }
         }
     }
 
-    private void updateAnimations(GameObject obj) {
+    private void updateAnimations(GameObject obj, int pos) {
         if (obj.isAnimating()) {
             obj.update();
         } else if (obj.finishedAnimating()) {
             //find another object in chain to start animation on it
-
             Exit exit = obj.getAnimationEndExit();
-            if (this.hasPairedExit(exit)) {}
-            // newObj = this.getPairedObject
-            // newObj.startAnimation(exit.getChainedExit())
+            int oldCol = pos / this.nCols;
+            int oldRow = pos % this.nCols;
+
+            int newRow = getPairedRow(exit.getDir(), oldRow);
+            int newCol = getPairedCol(exit.getDir(), oldCol);
+
+            if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
+
+                GameObject newObj = this.getObjectFromCoords(newRow, newCol);
+                newObj.startAnimation(obj.getExitAt(newRow, newCol, exit.getDir().opposite()));
+            }
         }
     }
 
-    private boolean hasPairedExit(Exit exit) {
-        //GameObject oldObj = this.getObjectFromCoords()
-        int row, col;
-        switch(exit.getDir()) {
-            case LEFT:
-
-                break;
+    private int getPairedRow(Direction dir, int row) {
+        switch(dir) {
             case UP:
-                break;
-            case RIGHT:
+                row--;
                 break;
             case DOWN:
+                row++;
                 break;
-            default: return false;
         }
+        return row;
+    }
 
-        return true;
+    private int getPairedCol(Direction dir, int col) {
+        switch(dir) {
+            case LEFT:
+                col--;
+                break;
+            case RIGHT:
+                col++;
+                break;
+        }
+        return col;
+    }
+
+    private boolean hasPairedExit(int row, int col, Direction dir) {
+        if (row < 0 || row > this.nRows) return false;
+        if (col < 0 || col > this.nCols) return false;
+        GameObject obj = this.getObjectFromCoords(row, col);
+        if(obj == null) return false;
+
+        Point startCoords = this.getStartCoords(row, col);
+        return obj.hasExitAt(row - startCoords.x, col - startCoords.y, dir.opposite());
     }
 
     /** Performs add to layout without any collision and boundary checks.
@@ -203,7 +225,7 @@ public class Grid {
      * @param row: x coordinate of the upper left corner of the object.
      * @param col: y coordinate of the upper left corner of the object.
      * */
-    private void saveAddToLayout(GameObject object, int row, int col) {
+    private void safeAddToLayout(GameObject object, int row, int col) {
         int width = object.getWidthCells();
         int height = object.getHeightCells();
 

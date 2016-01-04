@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 import com.example.jacek.streamthegame.Animation;
+import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.Sprite;
@@ -88,6 +89,20 @@ public abstract class GameObject {
         }
     }
 
+    public boolean hasExitAt(int row, int col, Direction dir) {
+        int corner = this.getCornerFromCoords(row, col);
+        if (this.exit1.getDir() == dir && this.exit1.getCorner() == corner) return true;
+        if (this.exit2.getDir() == dir && this.exit2.getCorner() == corner) return true;
+        return false;
+    }
+
+    public Exit getExitAt(int row, int col, Direction dir) {
+        int corner = this.getCornerFromCoords(row, col);
+        if (this.exit1.getDir() == dir && this.exit1.getCorner() == corner) return this.exit1;
+        if (this.exit2.getDir() == dir && this.exit2.getCorner() == corner) return this.exit2;
+        return null;
+    }
+
     /* No additional parameters because only rotation 90 deg right is available */
     public void rotate() {
         Matrix matrix = new Matrix();
@@ -115,5 +130,19 @@ public abstract class GameObject {
     private void rotateExits() {
         this.exit1.rotate();
         this.exit2.rotate();
+    }
+
+    /*
+    * value of the corner in which the exit appears
+    * 0 -> upper left   coordinates (row, column): (0,0)
+    * 1 -> upper right   (0, lastCol)
+    * 2 -> lower right   (lastRow, lastCol)
+    * 3 -> lower left    (lastRow, 0)
+    * */
+    private int getCornerFromCoords(int row, int col) {
+        if (row == 0 && col == 0) return 0;
+        else if (row == 0) return 1;
+        else if (col == 0) return 3;
+        else return 2;
     }
 }
