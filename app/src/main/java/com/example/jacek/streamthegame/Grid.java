@@ -24,19 +24,24 @@ public class Grid {
     //      int i = row*this.nCols + col;
     private GameObject[] currentLayout; // todo maybe new class.
 
-    private Context context;
+    //private Context context;
     private GameObjectFactory gameObjectFactory;
 
-    public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
-        this.context = context; // TODO: replace context with gameobj factory
-        this.gameObjectFactory = new GameObjectFactory(context, cellWidth, cellHeight); // todo check if removing cellWidth, cellHeight from Grid is possible
+    //public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
+    public Grid(Context context, LevelDefinition level, int canvasHeight, int canvasWidth) {
+        //this.context = context; // TODO: replace context with gameobj factory
+        this.nRows = level.getHeight();
+        this.nCols = level.getWidth();
+        this.cellHeight = canvasHeight/this.nRows;
+        this.cellWidth = canvasWidth/this.nCols;
+        this.gameObjectFactory = new GameObjectFactory(context, this.cellWidth, this.cellHeight);
 
-        this.nRows = rows;
-        this.nCols = cols;
-        this.cellWidth = cellWidth;
-        this.cellHeight = cellHeight;
+        //this.nRows = rows;
+        //this.nCols = cols;
+        //this.cellWidth = cellWidth;
+        //this.cellHeight = cellHeight;
 
-        this.currentLayout = new GameObject[rows*cols];
+        this.currentLayout = new GameObject[this.nRows*this.nCols];
     }
 
     public void draw(Canvas canvas) {
@@ -66,12 +71,12 @@ public class Grid {
         return this.cellHeight;
     }
 
-    public void tryAddObject(Sprite sprite, int row, int col ) {
-        GameObject obj = this.gameObjectFactory.getObject(sprite);
-        if (obj != null) {
-            this.addToLayout(obj, row, col);
-        }
-    }
+//    public void tryAddObject(Sprite sprite, int row, int col ) {
+//        GameObject obj = this.gameObjectFactory.getObject(sprite);
+//        if (obj != null) {
+//            this.addToLayout(obj, row, col);
+//        }
+//    }
 
     public GameObject getObjectFromCoords(int row, int col) {
         return this.currentLayout[row*this.nCols + col];

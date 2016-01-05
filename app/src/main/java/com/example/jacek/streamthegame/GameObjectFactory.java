@@ -34,15 +34,6 @@ public class GameObjectFactory {
             case short_pipe:
                 obj = new ShortPipe(this.context, this.cellWidth, this.cellHeight);
                 break;
-            case rotated_short_pipe:
-//                obj = new GameObject(BitmapFactory.decodeResource(
-//                        this.context.getResources(),
-//                        R.drawable.short_pipe),
-//                        1, 2,
-//                        this.cellWidth, this.cellHeight);
-//                obj.rotate();
-                //this.objects.put(pipe, point);
-                break;
             case bend2:
                 obj = new Bend2(this.context, this.cellWidth, this.cellHeight);
                 break;
