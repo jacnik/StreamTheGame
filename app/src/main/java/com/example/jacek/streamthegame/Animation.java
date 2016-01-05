@@ -54,9 +54,11 @@ public class Animation {
         }
     }
 
-    public Bitmap getImage() {
+    public Bitmap getImage(Direction rotationDirection) {
+        int rotationScale = this.startDirection.getDiffFrom(rotationDirection);
+
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
+        matrix.postRotate(90 * rotationScale);
 
         return Bitmap.createBitmap(
                 this.frames[this.currentFrame], 0, 0, this.frameWidth,

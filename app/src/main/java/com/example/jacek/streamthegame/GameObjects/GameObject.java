@@ -19,7 +19,7 @@ public abstract class GameObject {
 
     protected Exit exit1;
     protected Exit exit2;
-    private Exit animationStartExit;
+    protected Exit animationStartExit;
     protected boolean isStatic;
 
     protected boolean isAnimating;
@@ -45,7 +45,7 @@ public abstract class GameObject {
         if (this.isAnimating) {
             // images from animation are not scaled
             return Bitmap.createScaledBitmap(
-                    this.animation.getImage(),
+                    this.animation.getImage(this.animationStartExit.getDir()),
                     this.widthCells * this.cellWidth,
                     this.heightCells * this.cellHeight,
                     false);

@@ -7,8 +7,12 @@ public enum Direction {
     RIGHT, DOWN, LEFT, UP;
 
     public Direction next() {
-        return values()[(ordinal() + 1) % values().length];
+        return values()[(this.ordinal() + 1) % values().length];
     }
 
-    public Direction opposite() { return values()[(ordinal() + 2) % values().length]; }
+    public Direction opposite() { return values()[(this.ordinal() + 2) % values().length]; }
+
+    public int getDiffFrom(Direction dir) {
+        return dir.ordinal() - this.ordinal();
+    }
 }

@@ -32,7 +32,7 @@ public class ExitObject extends GameObject {
                 BitmapFactory.decodeResource(
                         context.getResources(),
                         R.drawable.exit_valve_spritesheet),
-                this.heightCells, this.widthCells, Direction.LEFT);
+                this.heightCells, this.widthCells, Direction.RIGHT);
         this.exit1 = new Exit(1,Direction.RIGHT);
         this.exit2 = new Exit(1,Direction.RIGHT);
     }
@@ -42,10 +42,10 @@ public class ExitObject extends GameObject {
         return Sprite.exit;
     }
 
-// todo probably not needed
-//    /* Overridden because Exit here will be null */
-//    @Override
-//    public void startAnimation(Exit exit) {
-//        this.isAnimating = true;
-//    }
+    /* Overridden because Exit parameter here will be null */
+    @Override
+    public void startAnimation(Exit exit) {
+        this.animationStartExit = this.exit1;
+        this.isAnimating = true;
+    }
 }
