@@ -166,22 +166,21 @@ public class Grid {
     }
 
     private void updateAnimations(GameObject obj, int pos) {
-        if (obj.isAnimating()) {
-            obj.update();
-        } else if (obj.finishedAnimating()) {
+        if (obj.finishedAnimating()) {
             //find another object in chain to start animation on it
             Exit exit = obj.getAnimationEndExit();
-            int oldCol = pos / this.nCols;
-            int oldRow = pos % this.nCols;
+            int oldRow = pos / this.nCols;
+            int oldCol = pos % this.nCols;
 
             int newRow = getPairedRow(exit.getDir(), oldRow);
             int newCol = getPairedCol(exit.getDir(), oldCol);
 
             if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
-
                 GameObject newObj = this.getObjectFromCoords(newRow, newCol);
-                newObj.startAnimation(obj.getExitAt(newRow, newCol, exit.getDir().opposite()));
+                newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
             }
+        } else if (obj.isAnimating()) {
+            obj.update();
         }
     }
 
@@ -217,6 +216,12 @@ public class Grid {
 
         Point startCoords = this.getStartCoords(row, col);
         return obj.hasExitAt(row - startCoords.x, col - startCoords.y, dir.opposite());
+    }
+
+    private Exit getPairedExit(int row, int col, Direction dir) {
+        GameObject obj = this.getObjectFromCoords(row, col);
+        Point startCoords = this.getStartCoords(row, col);
+        return obj.getExitAt(row - startCoords.x, col - startCoords.y, dir.opposite());
     }
 
     /** Performs add to layout without any collision and boundary checks.

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
+import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.R;
 import com.example.jacek.streamthegame.Sprite;
 
@@ -31,6 +32,8 @@ public class ShortPipe extends GameObject {
                         context.getResources(),
                         R.drawable.short_pipe_spritesheet),
                 this.heightCells, this.widthCells, Direction.UP);
+        this.exit1 = new Exit(1, Direction.UP);
+        this.exit2 = new Exit(3, Direction.DOWN);
     }
 
     @Override
