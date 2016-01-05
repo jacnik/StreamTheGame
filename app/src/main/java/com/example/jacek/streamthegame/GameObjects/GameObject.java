@@ -6,7 +6,6 @@ import android.graphics.Matrix;
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
-import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.Sprite;
 
 
@@ -18,7 +17,6 @@ public abstract class GameObject {
     protected int widthCells, heightCells; // width and height in cell units!
     protected int cellWidth, cellHeight;
 
-    protected Exits exits; // todo remove
     protected Exit exit1;
     protected Exit exit2;
     private Exit animationStartExit;

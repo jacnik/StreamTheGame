@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
-import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.R;
 import com.example.jacek.streamthegame.Sprite;
 
@@ -33,11 +32,6 @@ public class Enter extends GameObject {
                         context.getResources(),
                         R.drawable.exit_valve_spritesheet), //todo create enter spritesheet
                 this.heightCells, this.widthCells, Direction.LEFT);
-        this.exits = new Exits(
-                0, 0,
-                0, 0,
-                Direction.RIGHT, Direction.RIGHT,
-                this.widthCells, this.heightCells);
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
-import com.example.jacek.streamthegame.Exits;
 import com.example.jacek.streamthegame.R;
 import com.example.jacek.streamthegame.Sprite;
 
@@ -34,11 +33,6 @@ public class ExitObject extends GameObject {
                         context.getResources(),
                         R.drawable.exit_valve_spritesheet),
                 this.heightCells, this.widthCells, Direction.LEFT);
-        this.exits = new Exits(
-                0, 0,
-                0, 0,
-                Direction.RIGHT, Direction.RIGHT,
-                this.widthCells, this.heightCells);
         this.exit1 = new Exit(1,Direction.RIGHT);
         this.exit2 = new Exit(1,Direction.RIGHT);
     }
