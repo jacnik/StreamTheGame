@@ -2,6 +2,7 @@ package com.example.jacek.streamthegame.GameObjects;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Point;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
@@ -35,6 +36,7 @@ public abstract class GameObject {
 
     public void update() {
         if (this.animation.playedOnce()) {
+            this.isAnimating = false;
             this.finishedAnimating = true;
         } else {
             this.animation.update();
@@ -42,7 +44,7 @@ public abstract class GameObject {
     }
 
     public Bitmap getImage() {
-        if (this.isAnimating) {
+        if (this.isAnimating || this.finishedAnimating()) {
             // images from animation are not scaled
             return Bitmap.createScaledBitmap(
                     this.animation.getImage(this.animationStartExit.getDir()),
@@ -81,9 +83,9 @@ public abstract class GameObject {
 
     public Exit getAnimationEndExit() {
         if (this.animationStartExit == this.exit1) {
-            return this.exit1;
-        } else {
             return this.exit2;
+        } else {
+            return this.exit1;
         }
     }
 
@@ -123,6 +125,17 @@ public abstract class GameObject {
                 this.widthCells * this.cellWidth,
                 this.heightCells * this.cellHeight,
                 false);
+    }
+
+    /** x = rowCoordinate, y = col coordinate */
+    public Point getCoordsFromCorner(int corner) {
+        switch (corner) {
+            case 0: return new Point(0, 0);
+            case 1: return new Point(0, this.getWidthCells() - 1);
+            case 2: return new Point(this.getHeightCells() - 1, this.getWidthCells() - 1);
+            case 3: return new Point(this.getHeightCells() - 1, 0);
+            default: return null;
+        }
     }
 
     private void rotateExits() {

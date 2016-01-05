@@ -134,10 +134,7 @@ public class Grid {
                 int pos = (row + i)*this.nCols + (col+j);
                 //this.currentLayout[pos] = object;
                 if (pos < this.nRows * this.nCols
-                       && this.currentLayout[pos] == null
-                        /* && add boundary detection
-                        * basically it will need to be something like
-                        * col + width < last column number in this row*/) {
+                       && this.currentLayout[pos] == null) {
                     insertionPoints[i*width + j] = pos;
                 } else {
                     insertSafe = false;
@@ -153,11 +150,11 @@ public class Grid {
         }
     }
 
-    public void update() {
+    public synchronized void update() {
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject obj = this.currentLayout[i];
             if (obj != null) {
-                if (obj.isAnimating() || obj.finishedAnimating()) {
+                if (obj.isAnimating()) {
                     this.updateAnimations(obj, i);
                     break;
                 }
@@ -165,22 +162,27 @@ public class Grid {
         }
     }
 
+    // todo this whole method needs some serious refactoring
     private void updateAnimations(GameObject obj, int pos) {
+        obj.update();
         if (obj.finishedAnimating()) {
-            //find another object in chain to start animation on it
-            Exit exit = obj.getAnimationEndExit();
-            int oldRow = pos / this.nCols;
-            int oldCol = pos % this.nCols;
+            this.startPairedAnimation(obj, pos);
+        }
+    }
 
-            int newRow = getPairedRow(exit.getDir(), oldRow);
-            int newCol = getPairedCol(exit.getDir(), oldCol);
+    private void startPairedAnimation(GameObject obj, int pos) {
+        //find another object in chain to start animation on it
+        Exit exit = obj.getAnimationEndExit();
+        Point cornerCoords = obj.getCoordsFromCorner(exit.getCorner());
+        int oldRow = pos / this.nCols + cornerCoords.x;
+        int oldCol = pos % this.nCols + cornerCoords.y;
 
-            if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
-                GameObject newObj = this.getObjectFromCoords(newRow, newCol);
-                newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
-            }
-        } else if (obj.isAnimating()) {
-            obj.update();
+        int newRow = this.getPairedRow(exit.getDir(), oldRow);
+        int newCol = this.getPairedCol(exit.getDir(), oldCol);
+
+        if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
+            GameObject newObj = this.getObjectFromCoords(newRow, newCol);
+            newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
         }
     }
 
@@ -290,7 +292,6 @@ public class Grid {
         if (row < 0 || row + height > this.nRows) return true;
         if (col < 0 || col + width > this.nCols) return true;
 
-
         // check if all cells occupied by object are empty
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -300,7 +301,6 @@ public class Grid {
                 }
             }
         }
-
         // if checks above didn't find a collision there is none
         return false;
     }
