@@ -31,7 +31,7 @@ public class Enter extends GameObject {
         this.animation = new Animation(
                 BitmapFactory.decodeResource(
                         context.getResources(),
-                        R.drawable.exit_valve_spritesheet), //todo create enter spritesheet
+                        R.drawable.enter_valve_spritesheet),
                 this.heightCells, this.widthCells, Direction.LEFT);
         this.exit1 = new Exit(0, Direction.LEFT);
         this.exit2 = new Exit(0, Direction.LEFT);

@@ -19,11 +19,11 @@ public class LevelProvider {
         int nRows = 7;
         int nCols = 10;
         ArrayList<GameObjectDefinition> objects = new ArrayList<>();
-        objects.add(new GameObjectDefinition(Sprite.exit, 1, 2));
-        objects.add(new GameObjectDefinition(Sprite.enter, 5, 6, 1));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 2, 1));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 3, 4));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 5));
+        objects.add(new GameObjectDefinition(Sprite.exit, 3, 8, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 3, 1, 2));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 3, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 5));
         objects.add(new GameObjectDefinition(Sprite.bend2, 5, 7));
         return new LevelDefinition(nRows, nCols, objects);
     }
