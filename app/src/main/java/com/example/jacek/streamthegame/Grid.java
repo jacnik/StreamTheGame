@@ -106,12 +106,6 @@ public class Grid {
 
     public void addLevelObjects(LevelDefinition level) {
         // todo implement rotations
-        GameObject exit =  this.gameObjectFactory.getObject(level.getExit().getSprite());
-        GameObject enter =  this.gameObjectFactory.getObject(level.getEnter().getSprite());
-        this.addToLayout(
-                exit, level.getExit().getInsertionRow(), level.getExit().getInsertionCol());
-        this.addToLayout(
-                enter, level.getEnter().getInsertionRow(), level.getEnter().getInsertionCol());
         for(GameObjectDefinition objDef : level.getObjects()) {
             GameObject obj =  this.gameObjectFactory.getObject(objDef.getSprite());
             this.addToLayout(obj, objDef.getInsertionRow(), objDef.getInsertionCol());

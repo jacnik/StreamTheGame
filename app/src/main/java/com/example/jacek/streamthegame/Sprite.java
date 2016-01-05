@@ -5,5 +5,4 @@ package com.example.jacek.streamthegame;
  */
 public enum Sprite {
     exit, enter, short_pipe, bend2
-
 }

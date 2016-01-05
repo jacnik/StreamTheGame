@@ -7,17 +7,11 @@ import java.util.ArrayList;
  */
 public class LevelDefinition {
     private int height, width;
-    private GameObjectDefinition exit, enter;
     private ArrayList<GameObjectDefinition> objects = new ArrayList<>();
 
-    public LevelDefinition(
-            int height, int width,
-            GameObjectDefinition exit, GameObjectDefinition enter,
-            ArrayList<GameObjectDefinition> objects) {
+    public LevelDefinition(int height, int width, ArrayList<GameObjectDefinition> objects) {
         this.height = height;
         this.width = width;
-        this.exit = exit;
-        this.enter = enter;
         this.objects = objects;
     }
 
@@ -27,14 +21,6 @@ public class LevelDefinition {
 
     public int getWidth() {
         return width;
-    }
-
-    public GameObjectDefinition getExit() {
-        return exit;
-    }
-
-    public GameObjectDefinition getEnter() {
-        return enter;
     }
 
     public ArrayList<GameObjectDefinition> getObjects() {
