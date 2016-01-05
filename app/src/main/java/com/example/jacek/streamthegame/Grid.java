@@ -22,26 +22,17 @@ public class Grid {
     //      int row = i % this.nCols;
     // from coordinates to element in the array:
     //      int i = row*this.nCols + col;
-    private GameObject[] currentLayout; // todo maybe new class.
-
-    //private Context context;
+    private GameObject[] currentLayout;
     private GameObjectFactory gameObjectFactory;
 
-    //public Grid(Context context, int rows, int cols, int cellWidth, int cellHeight) {
     public Grid(Context context, LevelDefinition level, int canvasHeight, int canvasWidth) {
-        //this.context = context; // TODO: replace context with gameobj factory
         this.nRows = level.getHeight();
         this.nCols = level.getWidth();
         this.cellHeight = canvasHeight/this.nRows;
         this.cellWidth = canvasWidth/this.nCols;
         this.gameObjectFactory = new GameObjectFactory(context, this.cellWidth, this.cellHeight);
-
-        //this.nRows = rows;
-        //this.nCols = cols;
-        //this.cellWidth = cellWidth;
-        //this.cellHeight = cellHeight;
-
         this.currentLayout = new GameObject[this.nRows*this.nCols];
+        this.addLevelObjects(level);
     }
 
     public void draw(Canvas canvas) {
@@ -71,13 +62,6 @@ public class Grid {
         return this.cellHeight;
     }
 
-//    public void tryAddObject(Sprite sprite, int row, int col ) {
-//        GameObject obj = this.gameObjectFactory.getObject(sprite);
-//        if (obj != null) {
-//            this.addToLayout(obj, row, col);
-//        }
-//    }
-
     public GameObject getObjectFromCoords(int row, int col) {
         return this.currentLayout[row*this.nCols + col];
     }
@@ -88,7 +72,7 @@ public class Grid {
             Point startCoords = this.getStartCoords(row, col);
             this.removeObject(obj);
             obj.rotate();
-            this.addToLayout(obj, startCoords.x, startCoords.y);
+            this.saveAddToLayout(obj, startCoords.x, startCoords.y); // todo chage this addtoLayout
         }
     }
 
@@ -105,7 +89,7 @@ public class Grid {
             Point startCoords = this.getStartCoords(row, col);
             if (!this.checkObjCollision(startCoords.x, startCoords.y, drow, dcol)) {
                 this.removeObject(obj);
-                this.safeAddToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
+                this.addToLayout(obj, startCoords.x + drow, startCoords.y + dcol);
                 return true;
             }
         }
@@ -120,38 +104,17 @@ public class Grid {
         }
     }
 
-    /** Adds GameObject to layout in every row and col that this GameObject will occupy.
-     * @param object: object to add to layout.
-     * @param row: x coordinate of the upper left corner of the object.
-     * @param col: y coordinate of the upper left corner of the object.
-     * */
-    public void addToLayout(GameObject object, int row, int col) {
-        int width = object.getWidthCells();
-        int height = object.getHeightCells();
-        // width and height are properties of an object
-
-        int[] insertionPoints = new int[height*width];
-        boolean insertSafe = true;
-
-        mainLoop:
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                int pos = (row + i)*this.nCols + (col+j);
-                //this.currentLayout[pos] = object;
-                if (pos < this.nRows * this.nCols
-                       && this.currentLayout[pos] == null) {
-                    insertionPoints[i*width + j] = pos;
-                } else {
-                    insertSafe = false;
-                    break mainLoop;
-                }
-            }
-        }
-
-        if (insertSafe) {
-            for (int i = 0; i < height*width; ++i) {
-                this.currentLayout[insertionPoints[i]] = object;
-            }
+    public void addLevelObjects(LevelDefinition level) {
+        // todo implement rotations
+        GameObject exit =  this.gameObjectFactory.getObject(level.getExit().getSprite());
+        GameObject enter =  this.gameObjectFactory.getObject(level.getEnter().getSprite());
+        this.addToLayout(
+                exit, level.getExit().getInsertionRow(), level.getExit().getInsertionCol());
+        this.addToLayout(
+                enter, level.getEnter().getInsertionRow(), level.getEnter().getInsertionCol());
+        for(GameObjectDefinition objDef : level.getObjects()) {
+            GameObject obj =  this.gameObjectFactory.getObject(objDef.getSprite());
+            this.addToLayout(obj, objDef.getInsertionRow(), objDef.getInsertionCol());
         }
     }
 
@@ -167,7 +130,6 @@ public class Grid {
         }
     }
 
-    // todo this whole method needs some serious refactoring
     private void updateAnimations(GameObject obj, int pos) {
         obj.update();
         if (obj.finishedAnimating()) {
@@ -231,13 +193,46 @@ public class Grid {
         return obj.getExitAt(row - startCoords.x, col - startCoords.y, dir.opposite());
     }
 
+    /** Adds GameObject to layout in every row and col that this GameObject will occupy.
+     * @param object : object to add to layout.
+     * @param row : x coordinate of the upper left corner of the object.
+     * @param col : y coordinate of the upper left corner of the object.  */
+    private void saveAddToLayout(GameObject object, int row, int col) { // todo make this really save by checking collisions with this.checkcollisions(...)
+        int width = object.getWidthCells();
+        int height = object.getHeightCells();
+        // width and height are properties of an object
+
+        int[] insertionPoints = new int[height*width];
+        boolean insertSafe = true;
+
+        mainLoop:
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                int pos = (row + i)*this.nCols + (col+j);
+                //this.currentLayout[pos] = object;
+                if (pos < this.nRows * this.nCols && this.currentLayout[pos] == null) {
+                    insertionPoints[i*width + j] = pos;
+                } else {
+                    insertSafe = false;
+                    break mainLoop;
+                }
+            }
+        }
+
+        if (insertSafe) {
+            for (int i = 0; i < height*width; ++i) {
+                this.currentLayout[insertionPoints[i]] = object;
+            }
+        }
+    }
+
     /** Performs add to layout without any collision and boundary checks.
      * Assumes that checks for save insert was performed prior to calling this function.
      * @param object: object to add to layout.
      * @param row: x coordinate of the upper left corner of the object.
      * @param col: y coordinate of the upper left corner of the object.
      * */
-    private void safeAddToLayout(GameObject object, int row, int col) {
+    private void addToLayout(GameObject object, int row, int col) {
         int width = object.getWidthCells();
         int height = object.getHeightCells();
 
