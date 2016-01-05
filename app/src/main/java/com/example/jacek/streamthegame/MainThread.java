@@ -32,11 +32,10 @@ public class MainThread extends Thread {
         while(this.running) {
             startTime = System.nanoTime();
 
-            this.gamePanel.update();
-
             this.canvas = this.surfaceHolder.lockCanvas();
             // todo try/catch?
             synchronized (this.surfaceHolder) {
+                this.gamePanel.update();
                 this.gamePanel.draw(canvas);
             }
             surfaceHolder.unlockCanvasAndPost(canvas);

@@ -118,7 +118,7 @@ public class Grid {
         }
     }
 
-    public synchronized void update() {
+    public void update() {
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject obj = this.currentLayout[i];
             if (obj != null) {
