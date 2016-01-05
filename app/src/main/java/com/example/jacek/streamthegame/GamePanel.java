@@ -19,9 +19,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private Grid grid;
 
-   // private int nRows = 7; // todo do it better with levels
-    //private int nCols = 10; // todo do it better  with levels
-
     private int lastRow = 0; // used for moving objects
     private int lastCol = 0; // used for moving objects
     private GameObject lastObj; // used for moving objects
@@ -92,26 +89,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
-
-//        this.grid = new Grid(this.getContext(), this.nRows, this.nCols,
-//                getWidth()/this.nCols, getHeight()/this.nRows); // todo: implement levels
-
         this.grid = new Grid(
                 this.getContext(),
                 this.levelProvider.getLevel(0),
                 this.getHeight(),
                 this.getWidth());
-
-//        this.grid.tryAddObject(Sprite.exit, 1, 2);
-//        this.grid.tryAddObject(Sprite.enter, 5, 6);
-//        this.grid.tryAddObject(Sprite.short_pipe, 2, 1);
-//        this.grid.tryAddObject(Sprite.short_pipe, 3, 4);
-//        this.grid.tryAddObject(Sprite.short_pipe, 4, 5);
-//        this.grid.tryAddObject(Sprite.bend2, 5, 7);
-
-        //this.grid.tryAddObject(Sprite.rotated_short_pipe, 0, 1);
-        //this.grid.tryAddObject(Sprite.rotated_short_pipe, 2, 3);
 
         // we can safely start the game loop
         this.thread.setRunning(true);
