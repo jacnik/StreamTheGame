@@ -103,21 +103,23 @@ public abstract class GameObject {
         return null;
     }
 
-    /* No additional parameters because only rotation 90 deg right is available */
-    public void rotate() {
+    /** Rotates current object 90*rotations degrees */
+    public void rotate(int rotations) {
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
+        matrix.postRotate(90 * rotations);
 
         this.image = Bitmap.createBitmap(
                 this.image, 0, 0, this.image.getWidth(),
                 this.image.getHeight(), matrix, true);
 
-        // swap the dimensions
-        int tmp = this.widthCells;
-        this.widthCells = this.heightCells;
-        this.heightCells = tmp;
+        for (int i = 0; i < rotations % 4; ++i) {
+            // swap the dimensions
+            int tmp = this.widthCells;
+            this.widthCells = this.heightCells;
+            this.heightCells = tmp;
 
-        this.rotateExits();
+            this.rotateExits();
+        }
 
         // resize the image so it fits new dimensions
         this.image = Bitmap.createScaledBitmap(
@@ -125,6 +127,11 @@ public abstract class GameObject {
                 this.widthCells * this.cellWidth,
                 this.heightCells * this.cellHeight,
                 false);
+    }
+
+    /** just rotate 90Deg */
+    public void rotate() {
+        this.rotate(1);
     }
 
     /** x = rowCoordinate, y = col coordinate */

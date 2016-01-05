@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
+import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.R;
 import com.example.jacek.streamthegame.Sprite;
 
@@ -36,6 +37,8 @@ public class Bend2 extends GameObject {
                         context.getResources(),
                         R.drawable.short_pipe_spritesheet),
                 2, 1, Direction.LEFT);
+        this.exit1 = new Exit(0, Direction.DOWN); //todo: exits are mocked
+        this.exit2 = new Exit(0, Direction.DOWN);
     }
 
     @Override
