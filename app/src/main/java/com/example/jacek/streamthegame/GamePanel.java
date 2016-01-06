@@ -126,7 +126,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         this.grid.draw(canvas);
     }
 
-    public void update() {
+    public synchronized void update() {
         if (this.isAnimating) {
             this.grid.update();
         }

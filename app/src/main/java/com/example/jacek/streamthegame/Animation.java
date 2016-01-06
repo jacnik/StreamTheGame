@@ -49,8 +49,8 @@ public class Animation {
         }
 
         if (this.currentFrame == ANIMATION_FRAMES) {
-            this.playedOnce = true;
             this.currentFrame = ANIMATION_FRAMES - 1; // last frame will be shown after animation finishes
+            this.playedOnce = true;
         }
     }
 

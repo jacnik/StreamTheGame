@@ -143,7 +143,9 @@ public class Grid {
 
         if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
             GameObject newObj = this.getObjectFromCoords(newRow, newCol);
-            newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
+            if (!newObj.finishedAnimating()) {
+                newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
+            }
         }
     }
 

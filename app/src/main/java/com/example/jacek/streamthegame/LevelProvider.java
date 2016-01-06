@@ -64,6 +64,10 @@ public class LevelProvider {
         objects.add(new GameObjectDefinition(Sprite.short_pipe, 3, 5, 2));
         objects.add(new GameObjectDefinition(Sprite.enter, 2, 5, 3));
 
+        objects.add(new GameObjectDefinition(Sprite.exit, 6, 9, 3));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 9, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 3, 9, 3));
+
         return new LevelDefinition(nRows, nCols, objects);
     }
 }
