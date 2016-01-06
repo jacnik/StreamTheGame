@@ -8,10 +8,13 @@ import android.view.SurfaceView;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 
+import java.util.EventObject;
+
 /**
  * Created by jacek on 11/9/2015.
  */
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+public class GamePanel extends SurfaceView
+        implements SurfaceHolder.Callback, AnimationFinishedListener {
 
     private final long TAP_LENGTH = 300; // milliseconds
     private LevelProvider levelProvider = new LevelProvider();
@@ -40,6 +43,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        /** If animation is in progress don't handle any events */
+        if (this.isAnimating) return super.onTouchEvent(event);
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -95,6 +100,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 this.getHeight(),
                 this.getWidth());
 
+        this.grid.registerAnimationFinishedHandler(this);
+
         // we can safely start the game loop
         this.thread.setRunning(true);
         this.thread.start();
@@ -124,6 +131,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         this.grid.draw(canvas);
+    }
+
+    @Override
+    public void animationFinished(EventObject event) {
+        this.isAnimating = false;
     }
 
     public synchronized void update() {

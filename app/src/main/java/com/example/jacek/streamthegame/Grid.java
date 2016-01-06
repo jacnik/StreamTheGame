@@ -6,12 +6,15 @@ import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 
+import java.util.EventObject;
 import java.util.HashSet;
 
 /**
  * Created by jacek on 11/12/2015.
  */
 public class Grid {
+
+    private AnimationFinishedListener animationFinishedListener;
 
     private int nRows, nCols;
     private int cellWidth, cellHeight;
@@ -116,12 +119,20 @@ public class Grid {
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject obj = this.currentLayout[i];
             if (obj != null) {
+                if (obj.getType() == Sprite.enter && obj.finishedAnimating()) {
+                    this.animationFinished();
+                    break;
+                }
                 if (obj.isAnimating()) {
                     this.updateAnimations(obj, i);
                     break;
                 }
             }
         }
+    }
+
+    public synchronized void registerAnimationFinishedHandler(AnimationFinishedListener listener) {
+        this.animationFinishedListener = listener;
     }
 
     private void updateAnimations(GameObject obj, int pos) {
@@ -299,6 +310,13 @@ public class Grid {
         }
         // if checks above didn't find a collision there is none
         return false;
+    }
+
+    private synchronized void animationFinished () {
+        EventObject event = new EventObject(this);
+        if(this.animationFinishedListener != null){
+            this.animationFinishedListener.animationFinished(event);
+        }
     }
 
     private void clearLayout() {
