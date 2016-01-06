@@ -105,7 +105,6 @@ public class Grid {
     }
 
     public void addLevelObjects(LevelDefinition level) {
-        // todo implement rotations
         for(GameObjectDefinition objDef : level.getObjects()) {
             GameObject obj =  this.gameObjectFactory.getObject(objDef.getSprite());
             obj.rotate(objDef.getRotations());

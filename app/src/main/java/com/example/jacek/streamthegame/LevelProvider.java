@@ -48,12 +48,22 @@ public class LevelProvider {
         int nRows = 7;
         int nCols = 10;
         ArrayList<GameObjectDefinition> objects = new ArrayList<>();
-        objects.add(new GameObjectDefinition(Sprite.exit, 0, 5, 1));
-        objects.add(new GameObjectDefinition(Sprite.enter, 5, 5, 1));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 1));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 3, 1));
-        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 5));
-        objects.add(new GameObjectDefinition(Sprite.exit, 5, 0));
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 0));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 0, 1, 1));
+        objects.add(new GameObjectDefinition(Sprite.enter, 0, 3));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 1, 0, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 2, 0));
+        objects.add(new GameObjectDefinition(Sprite.enter, 4, 0, 1));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 2, 4, 2));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 2, 2, 3));
+        objects.add(new GameObjectDefinition(Sprite.enter, 2, 1, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 5, 5, 3));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 3, 5, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 2, 5, 3));
+
         return new LevelDefinition(nRows, nCols, objects);
     }
 }

@@ -33,8 +33,8 @@ public class ExitObject extends GameObject {
                         context.getResources(),
                         R.drawable.exit_valve_spritesheet),
                 this.heightCells, this.widthCells, Direction.RIGHT);
-        this.exit1 = new Exit(1,Direction.RIGHT);
-        this.exit2 = new Exit(1,Direction.RIGHT);
+        this.exit1 = new Exit(2,Direction.RIGHT);
+        this.exit2 = new Exit(2,Direction.RIGHT);
     }
 
     @Override
