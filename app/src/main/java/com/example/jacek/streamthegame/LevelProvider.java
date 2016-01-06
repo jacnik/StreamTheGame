@@ -6,6 +6,11 @@ import java.util.ArrayList;
  * Created by jacek on 1/5/2016.
  */
 public class LevelProvider {
+
+    public int getLevelCount() {
+        return 10;
+    }
+
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:

@@ -105,7 +105,7 @@ public class GamePanel extends SurfaceView
 
         this.grid.registerAnimationFinishedHandler(this);
 
-        this.homeScreen = new HomeScreen(this.getContext());
+        this.homeScreen = new HomeScreen(this.getContext(), this.levelProvider.getLevelCount());
 
         // we can safely start the game loop
         this.thread.setRunning(true);
