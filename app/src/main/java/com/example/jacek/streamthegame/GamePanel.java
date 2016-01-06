@@ -29,7 +29,7 @@ public class GamePanel extends SurfaceView
 
     private boolean isAnimating;
 
-    private boolean isHome = false; // todo implement screen after beating the level
+    private boolean isHome = true; // todo implement screen after beating the level
     private HomeScreen homeScreen;
 
     public GamePanel(Context context) {
@@ -48,7 +48,7 @@ public class GamePanel extends SurfaceView
     public boolean onTouchEvent(MotionEvent event) {
         /** If animation is in progress don't handle any events */
         if (this.isAnimating) return super.onTouchEvent(event);
-
+        if (this.isHome) return this.handleHomeEvents(event);
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
             int row = (int) event.getY() / this.grid.getCellHeight();
@@ -152,5 +152,12 @@ public class GamePanel extends SurfaceView
         if (this.isAnimating) {
             this.grid.update();
         }
+    }
+
+    public boolean handleHomeEvents(MotionEvent event) {
+        if (this.homeScreen.clicked(Math.round(event.getX()), Math.round(event.getY())) == 1) {
+            this.isHome = false;
+        }
+        return true;
     }
 }

@@ -45,7 +45,9 @@ public class ExitObject extends GameObject {
     /* Overridden because Exit parameter here will be null */
     @Override
     public void startAnimation(Exit exit) {
-        this.animationStartExit = this.exit1;
-        this.isAnimating = true;
+        if (!this.finishedAnimating()) {
+            this.animationStartExit = this.exit1;
+            this.isAnimating = true;
+        }
     }
 }

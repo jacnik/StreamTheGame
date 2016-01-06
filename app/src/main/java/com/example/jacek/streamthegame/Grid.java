@@ -154,9 +154,9 @@ public class Grid {
 
         if (this.hasPairedExit(newRow, newCol, exit.getDir())) {
             GameObject newObj = this.getObjectFromCoords(newRow, newCol);
-            if (!newObj.finishedAnimating()) {
+            //if (!newObj.finishedAnimating()) {
                 newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
-            }
+           // }
         }
     }
 
