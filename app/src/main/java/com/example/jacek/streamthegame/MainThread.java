@@ -40,6 +40,7 @@ public class MainThread extends Thread {
                    this.gamePanel.draw(canvas);
                 }
             } catch (Exception e) {
+                this.setRunning(false);
             // todo handle main loop exceptions
             }
             surfaceHolder.unlockCanvasAndPost(canvas);
