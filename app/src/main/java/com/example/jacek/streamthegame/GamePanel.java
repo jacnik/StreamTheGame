@@ -29,6 +29,9 @@ public class GamePanel extends SurfaceView
 
     private boolean isAnimating;
 
+    private boolean isHome = false; // todo implement screen after beating the level
+    private HomeScreen homeScreen;
+
     public GamePanel(Context context) {
         super(context);
         // add the callback to the surfaceholder to intercept events
@@ -102,6 +105,8 @@ public class GamePanel extends SurfaceView
 
         this.grid.registerAnimationFinishedHandler(this);
 
+        this.homeScreen = new HomeScreen(this.getContext());
+
         // we can safely start the game loop
         this.thread.setRunning(true);
         this.thread.start();
@@ -130,12 +135,17 @@ public class GamePanel extends SurfaceView
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        this.grid.draw(canvas);
+        if (this.isHome) {
+            this.homeScreen.draw(canvas);
+        } else {
+            this.grid.draw(canvas);
+        }
     }
 
     @Override
     public void animationFinished(EventObject event) {
         this.isAnimating = false;
+        this.isHome = true;
     }
 
     public synchronized void update() {
