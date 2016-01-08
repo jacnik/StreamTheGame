@@ -59,8 +59,10 @@ public class HomeScreen {
     }
 
     public int clicked(int x, int y) {
-        if(this.logoRect.contains(x, y)) {
-            return 1;
+        for (int i = 0; i < this.levels.length; ++i) {
+            if (this.levels[i].contains(x,y)) {
+                return i;
+            }
         }
         return 0;
     }
