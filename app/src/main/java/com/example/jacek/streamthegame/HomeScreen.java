@@ -106,7 +106,7 @@ public class HomeScreen {
     }
 
     private Paint getScaledPaint(int i) {
-        Paint p = new Paint();
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         switch (i) {
             case 0:
                 p.setColor(Color.rgb(25,2,214));
