@@ -60,6 +60,10 @@ public class Animation {
         Matrix matrix = new Matrix();
         matrix.postRotate(90 * rotationScale);
 
+        if (rotationScale < 0) { // todo handle mirror images
+            matrix.preScale(-1, 1); // mirror image
+        }
+
         return Bitmap.createBitmap(
                 this.frames[this.currentFrame], 0, 0, this.frameWidth,
                 this.frameHeight, matrix, true);
