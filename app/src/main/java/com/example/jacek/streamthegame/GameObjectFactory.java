@@ -3,6 +3,7 @@ package com.example.jacek.streamthegame;
 import android.content.Context;
 
 import com.example.jacek.streamthegame.GameObjects.Bend2;
+import com.example.jacek.streamthegame.GameObjects.Cbend;
 import com.example.jacek.streamthegame.GameObjects.Enter;
 import com.example.jacek.streamthegame.GameObjects.ExitObject;
 import com.example.jacek.streamthegame.GameObjects.GameObject;
@@ -36,6 +37,9 @@ public class GameObjectFactory {
                 break;
             case bend2:
                 obj = new Bend2(this.context, this.cellWidth, this.cellHeight);
+                break;
+            case c_bend:
+                obj = new Cbend(this.context, this.cellWidth, this.cellHeight);
                 break;
             default:
                 break;
