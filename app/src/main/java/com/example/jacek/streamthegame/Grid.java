@@ -73,9 +73,11 @@ public class Grid {
         GameObject obj = this.getObjectFromCoords(row, col);
         if (obj != null) {
             Point startCoords = this.getStartCoords(row, col);
-            this.removeObject(obj);
-            obj.rotate();
-            this.saveAddToLayout(obj, startCoords.x, startCoords.y); // todo chage this addtoLayout
+            if (this.isRotationSave(startCoords.x, startCoords.y)) {
+                this.removeObject(obj);
+                obj.rotate();
+                this.addToLayout(obj, startCoords.x, startCoords.y);
+            }
         }
     }
 
@@ -158,6 +160,7 @@ public class Grid {
                 newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
            // }
         } else {
+            //this.startFailLevelAnimation(newRow, newCol, exit.getDir()); // todo maybe in the futute, for now just reset animations
             this.resetAnimations();
             this.animationFinished(false);
         }
@@ -201,39 +204,6 @@ public class Grid {
         GameObject obj = this.getObjectFromCoords(row, col);
         Point startCoords = this.getStartCoords(row, col);
         return obj.getExitAt(row - startCoords.x, col - startCoords.y, dir.opposite());
-    }
-
-    /** Adds GameObject to layout in every row and col that this GameObject will occupy.
-     * @param object : object to add to layout.
-     * @param row : x coordinate of the upper left corner of the object.
-     * @param col : y coordinate of the upper left corner of the object.  */
-    private void saveAddToLayout(GameObject object, int row, int col) { // todo make this really save by checking collisions with this.checkcollisions(...)
-        int width = object.getWidthCells();
-        int height = object.getHeightCells();
-        // width and height are properties of an object
-
-        int[] insertionPoints = new int[height*width];
-        boolean insertSafe = true;
-
-        mainLoop:
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                int pos = (row + i)*this.nCols + (col+j);
-                //this.currentLayout[pos] = object;
-                if (pos < this.nRows * this.nCols && this.currentLayout[pos] == null) {
-                    insertionPoints[i*width + j] = pos;
-                } else {
-                    insertSafe = false;
-                    break mainLoop;
-                }
-            }
-        }
-
-        if (insertSafe) {
-            for (int i = 0; i < height*width; ++i) {
-                this.currentLayout[insertionPoints[i]] = object;
-            }
-        }
     }
 
     /** Performs add to layout without any collision and boundary checks.
@@ -315,6 +285,32 @@ public class Grid {
         return false;
     }
 
+    /**
+     * checks if object rotation is not colliding with other object and screen end
+     * @param srow: start (upper left) row of an object
+     * @param scol: start (upper left) col of an object
+     * */
+    private boolean isRotationSave(int srow, int scol) {
+        GameObject obj = this.getObjectFromCoords(srow, scol);
+        // after rotation objects dimensions will swap
+        int height = obj.getWidthCells();
+        int width = obj.getHeightCells();
+
+        if (srow + height > this.nRows) return false;
+        if (scol + width > this.nCols) return false;
+
+        // check if all new cells occupied by object are empty
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                int pos = (srow + i)*this.nCols + (scol+j);
+                if (this.currentLayout[pos] != null && this.currentLayout[pos] != obj) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private synchronized void resetAnimations() {
         HashSet<GameObject> visited = new HashSet<>();
         for (GameObject obj : this.currentLayout) {
@@ -330,6 +326,10 @@ public class Grid {
         if(this.animationFinishedListener != null){
             this.animationFinishedListener.animationFinished(event);
         }
+    }
+
+    private void startFailLevelAnimation(int row, int col, Direction dir) {
+        // todo
     }
 
     private void clearLayout() {
