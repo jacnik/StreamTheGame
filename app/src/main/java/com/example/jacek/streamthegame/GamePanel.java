@@ -143,9 +143,9 @@ public class GamePanel extends SurfaceView
     }
 
     @Override
-    public void animationFinished(EventObject event) {
+    public void animationFinished(AnimationFinishedEvent event) {
         this.isAnimating = false;
-        this.isHome = true;
+        this.isHome = event.isSuccess();
     }
 
     public synchronized void update() {

@@ -136,6 +136,12 @@ public abstract class GameObject {
         this.rotate(1);
     }
 
+    public void resetAnimation() {
+        this.animation.reset();
+        this.isAnimating = false;
+        this.finishedAnimating = false;
+    }
+
     /** x = rowCoordinate, y = col coordinate */
     public Point getCoordsFromCorner(int corner) {
         switch (corner) {

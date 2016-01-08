@@ -69,5 +69,10 @@ public class Animation {
         return this.playedOnce;
     }
 
+    public void reset() {
+        this.currentFrame = 0;
+        this.playedOnce = false;
+    }
+
     public void setDelay(long d) {this.delay = d;}
 }

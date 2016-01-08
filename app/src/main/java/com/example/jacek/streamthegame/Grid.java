@@ -120,7 +120,7 @@ public class Grid {
             GameObject obj = this.currentLayout[i];
             if (obj != null) {
                 if (obj.getType() == Sprite.enter && obj.finishedAnimating()) {
-                    this.animationFinished();
+                    this.animationFinished(true);
                     break;
                 }
                 if (obj.isAnimating()) {
@@ -157,6 +157,9 @@ public class Grid {
             //if (!newObj.finishedAnimating()) {
                 newObj.startAnimation(this.getPairedExit(newRow, newCol, exit.getDir()));
            // }
+        } else {
+            this.resetAnimations();
+            this.animationFinished(false);
         }
     }
 
@@ -312,8 +315,18 @@ public class Grid {
         return false;
     }
 
-    private synchronized void animationFinished () {
-        EventObject event = new EventObject(this);
+    private synchronized void resetAnimations() {
+        HashSet<GameObject> visited = new HashSet<>();
+        for (GameObject obj : this.currentLayout) {
+            if (obj != null && !visited.contains(obj)) {
+                obj.resetAnimation();
+                visited.add(obj);
+            }
+        }
+    }
+
+    private synchronized void animationFinished (boolean isSuccess) {
+        AnimationFinishedEvent event = new AnimationFinishedEvent(this, isSuccess);
         if(this.animationFinishedListener != null){
             this.animationFinishedListener.animationFinished(event);
         }
