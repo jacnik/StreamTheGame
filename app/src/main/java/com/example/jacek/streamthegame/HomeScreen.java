@@ -16,12 +16,12 @@ import java.util.ArrayList;
  */
 public class HomeScreen {
 
-    private static final String WELCOME = "Witaj w przejdzie :)";
+    private static final String WELCOME = "Witaj w przejdzie";
     private static final String SELECT_LEVEL = "Wybierz poziom:";
     private Bitmap logoImage;
     private Rect logoRect;
-    private Paint welcomePaint = new Paint(Paint.LINEAR_TEXT_FLAG);
-    private Paint levelSelectPaint = new Paint(Paint.LINEAR_TEXT_FLAG);
+    private Paint welcomePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint levelSelectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Rect[] levels;
 
     public HomeScreen(Context context, int levelCount) {
@@ -109,34 +109,34 @@ public class HomeScreen {
         Paint p = new Paint();
         switch (i) {
             case 0:
-                p.setColor(Color.rgb(155,174,242));
+                p.setColor(Color.rgb(25,2,214));
                 return p;
             case 1:
-                p.setColor(Color.rgb(185,205,255));
+                p.setColor(Color.rgb(1,40,223));
                 return p;
             case 2:
-                p.setColor(Color.rgb(255,226,200));
+                p.setColor(Color.rgb(1,149,221));
                 return p;
             case 3:
-                p.setColor(Color.rgb(254,161,68));
+                p.setColor(Color.rgb(0,223,160));
                 return p;
             case 4:
-                p.setColor(Color.rgb(255,136,6));
+                p.setColor(Color.rgb(9,223,1));
                 return p;
             case 5:
-                p.setColor(Color.rgb(255,119,0));
+                p.setColor(Color.rgb(111,223,0));
                 return p;
             case 6:
-                p.setColor(Color.rgb(255,105,0));
+                p.setColor(Color.rgb(215,223,0));
                 return p;
             case 7:
-                p.setColor(Color.rgb(255,80,2));
+                p.setColor(Color.rgb(221,106,0));
                 return p;
             case 8:
-                p.setColor(Color.rgb(254,50,0));
+                p.setColor(Color.rgb(222,0,11));
                 return p;
             case 9:
-                p.setColor(Color.rgb(255,1,1));
+                p.setColor(Color.rgb(221,0,220));
                 return p;
             default:
                 p.setColor(Color.rgb(255,255,255)); // default - WHITE
