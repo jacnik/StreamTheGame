@@ -17,9 +17,11 @@ import java.util.ArrayList;
 public class HomeScreen {
 
     private static final String WELCOME = "Witaj w przejdzie :)";
+    private static final String SELECT_LEVEL = "Wybierz poziom:";
     private Bitmap logoImage;
     private Rect logoRect;
     private Paint welcomePaint = new Paint(Paint.LINEAR_TEXT_FLAG);
+    private Paint levelSelectPaint = new Paint(Paint.LINEAR_TEXT_FLAG);
     private Rect[] levels;
 
     public HomeScreen(Context context, int levelCount) {
@@ -31,6 +33,8 @@ public class HomeScreen {
         this.welcomePaint.setColor(Color.WHITE);
         this.welcomePaint.setTextSize(80);
 
+        this.levelSelectPaint.setColor(Color.WHITE);
+        this.levelSelectPaint.setTextSize(40);
         this.levels = new Rect[levelCount];
     }
 
@@ -47,6 +51,9 @@ public class HomeScreen {
         canvas.drawText(WELCOME,
                 canvas.getWidth() / 20 + this.logoImage.getWidth() + 20,
                 canvas.getHeight() / 20 + this.logoImage.getHeight() * 0.8f, this.welcomePaint);
+        canvas.drawText(SELECT_LEVEL,
+                canvas.getWidth()/20,
+                this.logoRect.bottom + this.levelSelectPaint.getTextSize(), this.levelSelectPaint);
         this.drawLevels(canvas);
     }
 
@@ -62,7 +69,7 @@ public class HomeScreen {
             //initialize
             int cellWidth = canvas.getWidth() / (this.levels.length / 2);
             int cellHeight = (canvas.getHeight() - this.logoRect.height()) / 2;
-            int topX = this.logoRect.bottom;
+            int topX = this.logoRect.bottom + (int)(this.levelSelectPaint.getTextSize() * 1.4f);
             // first row
             int i = 0;
             for (; i < this.levels.length / 2; ++i) {
@@ -83,12 +90,13 @@ public class HomeScreen {
             }
         }
 
+        int d = this.levels[0].width() > this.levels[0].height() ?
+                this.levels[0].height() : this.levels[0].width(); // get smaller from width/height
         Paint p = new Paint(Color.BLUE);
         p.setColor(Color.BLUE);
         // draw rectangles and text
         for (int i = 0; i < this.levels.length; ++i) {
-            canvas.drawRect(this.levels[i], p);
-            canvas.drawText(Integer.toString(i + 1), this.levels[i].centerX(), this.levels[i].centerY(), welcomePaint);
+            canvas.drawCircle(this.levels[i].centerX(), this.levels[i].centerY(), d/2, p);
         }
     }
 }

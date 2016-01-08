@@ -14,10 +14,6 @@ public class Exit {
     * 3 -> lower left    (lastRow, 0)
     * */
     private int corner;
-    private int row;
-    private int col;
-    private int lastRow;
-    private int lastCol;
     private Direction dir;
 
     public Exit(int corner, Direction dir) {
