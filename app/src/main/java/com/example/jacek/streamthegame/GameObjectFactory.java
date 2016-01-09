@@ -17,37 +17,34 @@ import com.example.jacek.streamthegame.GameObjects.ShortPipe;
 public class GameObjectFactory {
 
     private Context context;
-    private int cellWidth, cellHeight;
 
-    public GameObjectFactory(Context context, int cellWidth, int cellHeight) {
+    public GameObjectFactory(Context context) {
         this.context = context;
-        this.cellWidth = cellWidth;
-        this.cellHeight = cellHeight;
     }
 
-    public GameObject getObject(Sprite sprite) {
+    public GameObject getObject(Sprite sprite, int cellWidth, int cellHeight) {
         GameObject obj = null;
         switch (sprite) {
             case exit:
-                obj = new ExitObject(this.context, this.cellWidth, this.cellHeight);
+                obj = new ExitObject(this.context, cellWidth, cellHeight);
                 break;
             case enter:
-                obj = new Enter(this.context, this.cellWidth, this.cellHeight);
+                obj = new Enter(this.context, cellWidth, cellHeight);
                 break;
             case short_pipe:
-                obj = new ShortPipe(this.context, this.cellWidth, this.cellHeight);
+                obj = new ShortPipe(this.context, cellWidth, cellHeight);
                 break;
             case bend2:
-                obj = new Bend2(this.context, this.cellWidth, this.cellHeight);
+                obj = new Bend2(this.context, cellWidth, cellHeight);
                 break;
             case c_bend:
-                obj = new Cbend(this.context, this.cellWidth, this.cellHeight);
+                obj = new Cbend(this.context, cellWidth, cellHeight);
                 break;
             case s_bend:
-                obj = new Sbend(this.context, this.cellWidth, this.cellHeight);
+                obj = new Sbend(this.context, cellWidth, cellHeight);
                 break;
             case l_bend:
-                obj = new Lbend(this.context, this.cellWidth, this.cellHeight);
+                obj = new Lbend(this.context, cellWidth, cellHeight);
                 break;
             default:
                 break;

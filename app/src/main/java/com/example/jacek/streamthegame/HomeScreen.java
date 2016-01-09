@@ -63,7 +63,7 @@ public class HomeScreen {
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     private void drawLevels(Canvas canvas) {

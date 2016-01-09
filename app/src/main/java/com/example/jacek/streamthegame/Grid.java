@@ -2,7 +2,6 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
@@ -18,6 +17,7 @@ public class Grid {
 
     private int nRows, nCols;
     private int cellWidth, cellHeight;
+    private int canvasHeight, canvasWidth;
 
     // currentLayout maps all cells with object that are placed on them
     // from item number to coordinates:
@@ -28,14 +28,10 @@ public class Grid {
     private GameObject[] currentLayout;
     private GameObjectFactory gameObjectFactory;
 
-    public Grid(Context context, LevelDefinition level, int canvasHeight, int canvasWidth) {
-        this.nRows = level.getHeight();
-        this.nCols = level.getWidth();
-        this.cellHeight = canvasHeight/this.nRows;
-        this.cellWidth = canvasWidth/this.nCols;
-        this.gameObjectFactory = new GameObjectFactory(context, this.cellWidth, this.cellHeight);
-        this.currentLayout = new GameObject[this.nRows*this.nCols];
-        this.addLevelObjects(level);
+    public Grid(Context context, int canvasHeight, int canvasWidth) {
+        this.canvasHeight = canvasHeight;
+        this.canvasWidth = canvasWidth;
+        this.gameObjectFactory = new GameObjectFactory(context);
     }
 
     public void draw(Canvas canvas) {
@@ -98,20 +94,13 @@ public class Grid {
         return false;
     }
 
-    public void removeObject(GameObject obj) {
-        for (int i = 0; i < this.nRows * this.nCols; ++i) {
-            if(this.currentLayout[i] == obj) {
-                this.currentLayout[i] = null;
-            }
-        }
-    }
-
-    public void addLevelObjects(LevelDefinition level) {
-        for(GameObjectDefinition objDef : level.getObjects()) {
-            GameObject obj =  this.gameObjectFactory.getObject(objDef.getSprite());
-            obj.rotate(objDef.getRotations());
-            this.addToLayout(obj, objDef.getInsertionRow(), objDef.getInsertionCol());
-        }
+    public void setLevel(LevelDefinition level) {
+        this.nRows = level.getHeight();
+        this.nCols = level.getWidth();
+        this.cellHeight = this.canvasHeight/this.nRows;
+        this.cellWidth = this.canvasWidth/this.nCols;
+        this.currentLayout = new GameObject[this.nRows*this.nCols];
+        this.addLevelObjects(level);
     }
 
     public void update() {
@@ -136,6 +125,23 @@ public class Grid {
             } else {
                 this.startPairedAnimation(obj, pos);
             }
+        }
+    }
+
+    private void removeObject(GameObject obj) {
+        for (int i = 0; i < this.nRows * this.nCols; ++i) {
+            if(this.currentLayout[i] == obj) {
+                this.currentLayout[i] = null;
+            }
+        }
+    }
+
+    private void addLevelObjects(LevelDefinition level) {
+        for(GameObjectDefinition objDef : level.getObjects()) {
+            GameObject obj =  this.gameObjectFactory.getObject(
+                    objDef.getSprite(), this.cellWidth, this.cellHeight);
+            obj.rotate(objDef.getRotations());
+            this.addToLayout(obj, objDef.getInsertionRow(), objDef.getInsertionCol());
         }
     }
 
@@ -186,8 +192,8 @@ public class Grid {
     }
 
     private boolean hasPairedExit(int row, int col, Direction dir) {
-        if (row < 0 || row > this.nRows) return false;
-        if (col < 0 || col > this.nCols) return false;
+        if (row < 0 || row >= this.nRows) return false;
+        if (col < 0 || col >= this.nCols) return false;
         GameObject obj = this.getObjectFromCoords(row, col);
         if(obj == null) return false;
 

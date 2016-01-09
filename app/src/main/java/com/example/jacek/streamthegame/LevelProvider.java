@@ -14,12 +14,28 @@ public class LevelProvider {
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:
-                return this.debugLevel_lbendAnimations();
+                return this.level_1();
             case 1:
                 return defaultLevel();
                 //break;
             default: return defaultLevel();
         }
+    }
+
+    private LevelDefinition level_1() { //todo shuffle objects
+        int nRows = 7;
+        int nCols = 10;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 1, 1));
+        objects.add(new GameObjectDefinition(Sprite.enter, 6, 7, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 3));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 1, 5));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 0, 7));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 2, 7));
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 4, 6));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 5, 8));
+
+        return new LevelDefinition(nRows, nCols, objects);
     }
 
     private LevelDefinition defaultLevel() {

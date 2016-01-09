@@ -97,12 +97,7 @@ public class GamePanel extends SurfaceView
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        this.grid = new Grid(
-                this.getContext(),
-                this.levelProvider.getLevel(0),
-                this.getHeight(),
-                this.getWidth());
-
+        this.grid = new Grid(this.getContext(), this.getHeight(), this.getWidth());
         this.grid.registerAnimationFinishedHandler(this);
 
         this.homeScreen = new HomeScreen(this.getContext(), this.levelProvider.getLevelCount());
@@ -155,7 +150,11 @@ public class GamePanel extends SurfaceView
     }
 
     public boolean handleHomeEvents(MotionEvent event) {
-        if (this.homeScreen.clicked(Math.round(event.getX()), Math.round(event.getY())) == 1) {
+        int clickedLevel = this.homeScreen.clicked(
+                Math.round(event.getX()), Math.round(event.getY()));
+        if (clickedLevel > -1) {
+            this.grid.setLevel(
+                    this.levelProvider.getLevel(clickedLevel));
             this.isHome = false;
         }
         return true;
