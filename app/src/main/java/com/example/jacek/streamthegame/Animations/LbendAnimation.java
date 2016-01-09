@@ -24,31 +24,33 @@ public class LbendAnimation extends Animation {
         switch (exit.getCorner()) {
             case 0:
                 if (exit.getDir() == Direction.LEFT) {
-//                    transform.postRotate(90);
-//                    transform.postScale(-1, 1);
+                    useMirror = true;
+                    transform.postRotate(90 * 3);
                 } else if (exit.getDir() == Direction.UP) {
-//                    transform.postRotate(90 * 3);
+                    transform.postRotate(90);
                 }
                 break;
             case 1:
                 if (exit.getDir() == Direction.RIGHT) {
-                    //transform.postScale(-1, 1);
+                    transform.postRotate(90 * 2);
                 } else if (exit.getDir() == Direction.UP) {
-                   // transform.postRotate(90);
+                   useMirror = true;
                 }
                 break;
             case 2:
                 if (exit.getDir() == Direction.DOWN) {
-                    //transform.postRotate(90);
+                    transform.postRotate(90 * 3);
                 } else if (exit.getDir() == Direction.RIGHT) {
-                    //transform.postRotate(90 * 2);
+                    useMirror = true;
+                    transform.postRotate(90);
                 }
                 break;
             case 3:
                 if (exit.getDir() == Direction.DOWN) {
-                    //transform.postRotate(90 * 2);
+                    useMirror = true;
+                    transform.postRotate(90 * 2);
                 } else if (exit.getDir() == Direction.LEFT) {
-                    //transform.postScale(1, -1);
+                    /*empty*/
                 }
                 break;
         }
