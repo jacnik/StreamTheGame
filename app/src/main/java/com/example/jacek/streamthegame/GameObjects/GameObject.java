@@ -51,7 +51,7 @@ public abstract class GameObject {
                     this.animation.getImage(),
                     this.widthCells * this.cellWidth,
                     this.heightCells * this.cellHeight,
-                    false);
+                    true);
         } else {
             return this.image;
         }

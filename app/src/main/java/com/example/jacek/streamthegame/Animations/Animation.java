@@ -24,22 +24,6 @@ abstract public class Animation {
     private boolean playedOnce;
     private int frameHeight, frameWidth;
 
-//    public Animation(Bitmap spriteGrid, int frameHeight, int frameWidth, Direction startDirection) {
-//        this.startTime = System.nanoTime();
-//        this.frameHeight = frameHeight * SPRITE_CELL_SIDE_PIXELS;
-//        this.frameWidth = frameWidth * SPRITE_CELL_SIDE_PIXELS;
-//        this.startDirection = startDirection;
-//
-//        for (int i = 0; i < ANIMATION_FRAMES; ++i) {
-//            this.frames[i] = Bitmap.createBitmap(
-//                    spriteGrid,
-//                    i * this.frameWidth,
-//                    0,
-//                    this.frameWidth,
-//                    this.frameHeight);
-//        }
-//    }
-
     protected Animation(Context context, int frameHeight, int frameWidth) {
         this.context = context;
         this.frameHeight = frameHeight * SPRITE_CELL_SIDE_PIXELS;

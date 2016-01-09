@@ -2,6 +2,7 @@ package com.example.jacek.streamthegame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
@@ -38,7 +39,6 @@ public class Grid {
     }
 
     public void draw(Canvas canvas) {
-
         HashSet<GameObject> drawn = new HashSet<>();
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject item = currentLayout[i];
@@ -60,9 +60,7 @@ public class Grid {
         return this.cellWidth;
     }
 
-    public int getCellHeight() {
-        return this.cellHeight;
-    }
+    public int getCellHeight() { return this.cellHeight; }
 
     public GameObject getObjectFromCoords(int row, int col) {
         return this.currentLayout[row*this.nCols + col];
@@ -119,15 +117,9 @@ public class Grid {
     public void update() {
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject obj = this.currentLayout[i];
-            if (obj != null) {
-                if (obj.getType() == Sprite.enter && obj.finishedAnimating()) {
-                    this.animationFinished(true);
-                    break;
-                }
-                if (obj.isAnimating()) {
-                    this.updateAnimations(obj, i);
-                    break;
-                }
+            if (obj != null && obj.isAnimating()) {
+                this.updateAnimations(obj, i);
+                break;
             }
         }
     }
@@ -139,7 +131,11 @@ public class Grid {
     private void updateAnimations(GameObject obj, int pos) {
         obj.update();
         if (obj.finishedAnimating()) {
-            this.startPairedAnimation(obj, pos);
+            if (obj.getType() == Sprite.enter) {
+                this.animationFinished(true);
+            } else {
+                this.startPairedAnimation(obj, pos);
+            }
         }
     }
 

@@ -14,7 +14,7 @@ public class LevelProvider {
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:
-                return this.debugLevel_4();
+                return this.debugLevel_5();
             case 1:
                 return defaultLevel();
                 //break;
@@ -114,13 +114,13 @@ public class LevelProvider {
         objects.add(new GameObjectDefinition(Sprite.c_bend, 0, 4));
         objects.add(new GameObjectDefinition(Sprite.enter, 0, 3, 2));
 
-        objects.add(new GameObjectDefinition(Sprite.exit, 2, 3, 2));
-        objects.add(new GameObjectDefinition(Sprite.c_bend, 2, 1, 1));
-        objects.add(new GameObjectDefinition(Sprite.enter, 2, 0, 2));
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 6, 2));
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 0, 5, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 1, 6));
 
-        objects.add(new GameObjectDefinition(Sprite.exit, 6, 6, 3));
-        objects.add(new GameObjectDefinition(Sprite.c_bend, 4, 6));
-        objects.add(new GameObjectDefinition(Sprite.enter, 3, 6, 3));
+//        objects.add(new GameObjectDefinition(Sprite.exit, 6, 6, 3));
+//        objects.add(new GameObjectDefinition(Sprite.c_bend, 4, 6));
+//        objects.add(new GameObjectDefinition(Sprite.enter, 5, 6, 3));
 
         return new LevelDefinition(nRows, nCols, objects);
     }
