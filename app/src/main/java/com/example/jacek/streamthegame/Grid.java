@@ -328,10 +328,6 @@ public class Grid {
         }
     }
 
-    private void startFailLevelAnimation(int row, int col, Direction dir) {
-        // todo
-    }
-
     private void clearLayout() {
         for (GameObject obj : this.currentLayout) {
             obj = null;

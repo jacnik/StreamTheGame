@@ -14,7 +14,7 @@ public class LevelProvider {
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:
-                return this.debugLevel_5();
+                return this.debugLevel_4();
             case 1:
                 return defaultLevel();
                 //break;

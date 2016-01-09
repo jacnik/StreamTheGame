@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.jacek.streamthegame.Animation;
+import com.example.jacek.streamthegame.Animations.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.R;
@@ -26,14 +26,7 @@ public class Cbend extends GameObject {
                 widthCells * cellWidth,
                 heightCells * cellHeight,
                 false);
-        this.animation = new Animation(
-                BitmapFactory.decodeResource(
-                        context.getResources(),
-                        R.drawable.c_bend_spritesheet),
-                this.heightCells, this.widthCells, Direction.RIGHT);
-
-        this.animation.setStartCorner(new Exit(0,Direction.LEFT));
-        this.animation.setSymmetry(GameObject.SYMMETRY_HEIGHT);
+        this.animation = null;
 
         this.exit1 = new Exit(0,Direction.LEFT);
         this.exit2 = new Exit(3,Direction.LEFT);

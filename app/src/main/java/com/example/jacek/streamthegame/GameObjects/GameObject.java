@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
 
-import com.example.jacek.streamthegame.Animation;
+import com.example.jacek.streamthegame.Animations.Animation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
 import com.example.jacek.streamthegame.Sprite;
@@ -14,11 +14,6 @@ import com.example.jacek.streamthegame.Sprite;
  * Created by jacek on 11/15/2015.
  */
 public abstract class GameObject {
-
-    public static final int SYMMETRY_NONE = 0;
-    public static final int SYMMETRY_HEIGHT = 1;
-    public static final int SYMMETRY_WIDTH = 2;
-    public static final int SYMMETRY_DIAG = 3;
 
     protected Bitmap image;
     protected int widthCells, heightCells; // width and height in cell units!
@@ -53,10 +48,7 @@ public abstract class GameObject {
         if (this.isAnimating || this.finishedAnimating()) {
             // images from animation are not scaled
             return Bitmap.createScaledBitmap(
-                    //this.animation.getImage(this.animationStartExit.getDir()),
-//                    this.animation.getImage(
-//                            this.getCoordsFromCorner(this.animationStartExit.getCorner())),
-                    this.animation.getImage(this.animationStartExit),
+                    this.animation.getImage(),
                     this.widthCells * this.cellWidth,
                     this.heightCells * this.cellHeight,
                     false);
@@ -78,6 +70,7 @@ public abstract class GameObject {
     }
 
     public void startAnimation(Exit exit) {
+        this.animation.setup(exit);
         this.animationStartExit = exit;
         this.isAnimating = true;
     }
