@@ -14,6 +14,12 @@ import com.example.jacek.streamthegame.Sprite;
  * Created by jacek on 11/15/2015.
  */
 public abstract class GameObject {
+
+    public static final int SYMMETRY_NONE = 0;
+    public static final int SYMMETRY_HEIGHT = 1;
+    public static final int SYMMETRY_WIDTH = 2;
+    public static final int SYMMETRY_DIAG = 3;
+
     protected Bitmap image;
     protected int widthCells, heightCells; // width and height in cell units!
     protected int cellWidth, cellHeight;
@@ -26,9 +32,6 @@ public abstract class GameObject {
     protected boolean isAnimating;
     private boolean finishedAnimating;
     protected Animation animation;
-
-    public static final int SYMMETRY_NONE = 0;
-    public static final int SYMMETRY_HEIGTH = 1;
 
     protected GameObject(int cellWidth, int cellHeight) {
         this.cellWidth = cellWidth;

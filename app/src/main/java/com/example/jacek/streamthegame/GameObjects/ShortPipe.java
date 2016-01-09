@@ -34,6 +34,7 @@ public class ShortPipe extends GameObject {
                 this.heightCells, this.widthCells, Direction.UP);
 
         this.animation.setStartCorner(new Exit(1, Direction.UP));
+        this.animation.setSymmetry(GameObject.SYMMETRY_HEIGHT);
 
         this.exit1 = new Exit(1, Direction.UP);
         this.exit2 = new Exit(3, Direction.DOWN);

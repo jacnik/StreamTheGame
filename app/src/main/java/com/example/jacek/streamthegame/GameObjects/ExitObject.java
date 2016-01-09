@@ -35,6 +35,7 @@ public class ExitObject extends GameObject {
                 this.heightCells, this.widthCells, Direction.RIGHT);
 
         this.animation.setStartCorner(new Exit(0, Direction.RIGHT));
+        this.animation.setSymmetry(GameObject.SYMMETRY_HEIGHT);
 
         this.exit1 = new Exit(0,Direction.RIGHT);
         this.exit2 = new Exit(0,Direction.RIGHT);

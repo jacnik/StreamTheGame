@@ -31,6 +31,10 @@ public class Cbend extends GameObject {
                         context.getResources(),
                         R.drawable.c_bend_spritesheet),
                 this.heightCells, this.widthCells, Direction.RIGHT);
+
+        this.animation.setStartCorner(new Exit(0,Direction.LEFT));
+        this.animation.setSymmetry(GameObject.SYMMETRY_HEIGHT);
+
         this.exit1 = new Exit(0,Direction.LEFT);
         this.exit2 = new Exit(3,Direction.LEFT);
     }
