@@ -7,6 +7,7 @@ import com.example.jacek.streamthegame.GameObjects.Cbend;
 import com.example.jacek.streamthegame.GameObjects.Enter;
 import com.example.jacek.streamthegame.GameObjects.ExitObject;
 import com.example.jacek.streamthegame.GameObjects.GameObject;
+import com.example.jacek.streamthegame.GameObjects.Lbend;
 import com.example.jacek.streamthegame.GameObjects.Sbend;
 import com.example.jacek.streamthegame.GameObjects.ShortPipe;
 
@@ -44,6 +45,9 @@ public class GameObjectFactory {
                 break;
             case s_bend:
                 obj = new Sbend(this.context, this.cellWidth, this.cellHeight);
+                break;
+            case l_bend:
+                obj = new Lbend(this.context, this.cellWidth, this.cellHeight);
                 break;
             default:
                 break;
