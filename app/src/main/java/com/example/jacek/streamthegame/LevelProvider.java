@@ -16,8 +16,7 @@ public class LevelProvider {
             case 0:
                 return this.level_1();
             case 1:
-                return defaultLevel();
-                //break;
+                return this.level_2();
             default: return defaultLevel();
         }
     }
@@ -34,6 +33,21 @@ public class LevelProvider {
         objects.add(new GameObjectDefinition(Sprite.bend2, 2, 7));
         objects.add(new GameObjectDefinition(Sprite.c_bend, 4, 6));
         objects.add(new GameObjectDefinition(Sprite.bend2, 5, 8));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
+    private LevelDefinition level_2() { //todo shuffle objects
+        int nRows = 7;
+        int nCols = 10;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 3));
+        objects.add(new GameObjectDefinition(Sprite.enter, 5, 3, 1));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 0, 5));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 2, 6));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 6, 6, 1));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 4, 6, 1));
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 3, 4, 1));
 
         return new LevelDefinition(nRows, nCols, objects);
     }
