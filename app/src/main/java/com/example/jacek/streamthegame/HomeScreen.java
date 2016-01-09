@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import java.util.ArrayList;
 
 /**
  * Created by jacek on 1/6/2016.

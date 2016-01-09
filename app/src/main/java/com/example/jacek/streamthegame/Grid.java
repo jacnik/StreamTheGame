@@ -6,7 +6,6 @@ import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 
-import java.util.EventObject;
 import java.util.HashSet;
 
 /**

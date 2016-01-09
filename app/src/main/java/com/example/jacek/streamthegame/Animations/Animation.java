@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 import com.example.jacek.streamthegame.Exit;
-import com.example.jacek.streamthegame.GameObjects.GameObject;
 
 /**
  * Created by jacek on 12/10/2015.
@@ -18,7 +17,6 @@ abstract public class Animation {
     protected Context context;
     protected Bitmap[] frames = new Bitmap[ANIMATION_FRAMES];
     protected Exit startCorner; //corner from which animation starts
-    protected Matrix transform = new Matrix();
 
     private int currentFrame;
     private long startTime;
@@ -50,14 +48,15 @@ abstract public class Animation {
 
     abstract public void setup(Exit exit);
 
-    protected void createFramesFromImage(Bitmap spriteGrid) {
+    protected void createFramesFromImage(Bitmap spriteGrid, Matrix transform) {
         for (int i = 0; i < ANIMATION_FRAMES; ++i) {
             this.frames[i] = Bitmap.createBitmap(
                     spriteGrid,
                     i * this.frameWidth,
                     0,
                     this.frameWidth,
-                    this.frameHeight);
+                    this.frameHeight,
+                    transform, true);
         }
     }
 
@@ -79,9 +78,7 @@ abstract public class Animation {
     }
 
     public Bitmap getImage() {
-        return Bitmap.createBitmap(
-                this.frames[this.currentFrame], 0, 0, this.frameWidth,
-                this.frameHeight, this.transform, true);
+        return this.frames[this.currentFrame];
     }
 
     public boolean playedOnce() {
