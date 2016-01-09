@@ -19,17 +19,43 @@ public class CbendAnimation extends Animation {
 
     @Override
     public void setup(Exit exit) {
-        //int rotations = this.startCorner.getDir().getDiffFrom(exit.getDir());
         Matrix transform  = new Matrix();
-        //transform.postRotate(90 * rotations);
-
-        if (exit.getCorner() == 1) {
-            if (exit.getDir() == Direction.LEFT) {/* do nothing */}
-            else if (exit.getDir() == Direction.RIGHT) {
-                transform.postScale(-1, 1);
-            }
+        switch (exit.getCorner()) {
+            case 0:
+                if (exit.getDir() == Direction.UP) {
+                    transform.postRotate(90);
+                    transform.postScale(-1, 1);
+                } else if (exit.getDir() == Direction.DOWN) {
+                    transform.postRotate(90 * 3);
+                }
+                break;
+            case 1:
+                if (exit.getDir() == Direction.RIGHT) {
+                    transform.postScale(-1, 1);
+                } else if (exit.getDir() == Direction.UP) {
+                    transform.postRotate(90);
+                }
+                break;
+            case 2:
+                if (exit.getDir() == Direction.UP) {
+                    transform.postRotate(90);
+                } else if (exit.getDir() == Direction.RIGHT) {
+                    transform.postRotate(90 * 2);
+                } else if (exit.getDir() == Direction.DOWN) {
+                    transform.postRotate(90 * 3);
+                    transform.postScale(-1, 1);
+                }
+                break;
+            case 3:
+                if (exit.getDir() == Direction.RIGHT) {
+                    transform.postRotate(90 * 2);
+                } else if (exit.getDir() == Direction.LEFT) {
+                    transform.postScale(1, -1);
+                } else if (exit.getDir() == Direction.DOWN) {
+                    transform.postRotate(90 * 3);
+                }
+                break;
         }
-
 
         this.createFramesFromImage(BitmapFactory.decodeResource(
                 this.context.getResources(),

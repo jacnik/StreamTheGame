@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.jacek.streamthegame.Animations.Animation;
 import com.example.jacek.streamthegame.Animations.CbendAnimation;
 import com.example.jacek.streamthegame.Direction;
 import com.example.jacek.streamthegame.Exit;
