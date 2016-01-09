@@ -27,6 +27,9 @@ public abstract class GameObject {
     private boolean finishedAnimating;
     protected Animation animation;
 
+    public static final int SYMMETRY_NONE = 0;
+    public static final int SYMMETRY_HEIGTH = 1;
+
     protected GameObject(int cellWidth, int cellHeight) {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
@@ -47,7 +50,10 @@ public abstract class GameObject {
         if (this.isAnimating || this.finishedAnimating()) {
             // images from animation are not scaled
             return Bitmap.createScaledBitmap(
-                    this.animation.getImage(this.animationStartExit.getDir()),
+                    //this.animation.getImage(this.animationStartExit.getDir()),
+//                    this.animation.getImage(
+//                            this.getCoordsFromCorner(this.animationStartExit.getCorner())),
+                    this.animation.getImage(this.animationStartExit),
                     this.widthCells * this.cellWidth,
                     this.heightCells * this.cellHeight,
                     false);

@@ -14,7 +14,7 @@ public class LevelProvider {
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:
-                return this.debugLevel_1();
+                return this.debugLevel_4();
             case 1:
                 return defaultLevel();
                 //break;
@@ -38,7 +38,7 @@ public class LevelProvider {
     // section of levels for debugging purposes
     private LevelDefinition debugLevel_1() {
         int nRows = 10;
-        int nCols = 20;
+        int nCols = 14;
         ArrayList<GameObjectDefinition> objects = new ArrayList<>();
         objects.add(new GameObjectDefinition(Sprite.exit, 5, 5, 3));
         objects.add(new GameObjectDefinition(Sprite.enter, 5, 6, 1));
@@ -73,6 +73,30 @@ public class LevelProvider {
 
         objects.add(new GameObjectDefinition(Sprite.exit, 3, 2));
         objects.add(new GameObjectDefinition(Sprite.enter, 3, 7));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
+    private LevelDefinition debugLevel_4() { // for testing Animation orientations
+
+        int nRows = 7;
+        int nCols = 10;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 0));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 0, 1, 1));
+        objects.add(new GameObjectDefinition(Sprite.enter, 0, 3));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 4, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 4));
+        objects.add(new GameObjectDefinition(Sprite.enter, 3, 4, 1));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 2, 3, 2));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 2, 1, 1));
+        objects.add(new GameObjectDefinition(Sprite.enter, 2, 0, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.exit, 6, 6, 3));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 6));
+        objects.add(new GameObjectDefinition(Sprite.enter, 3, 6, 3));
 
         return new LevelDefinition(nRows, nCols, objects);
     }

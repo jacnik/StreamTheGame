@@ -2,6 +2,7 @@ package com.example.jacek.streamthegame;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Point;
 
 /**
  * Created by jacek on 12/10/2015.
@@ -20,6 +21,9 @@ public class Animation {
     private boolean playedOnce;
     private int frameHeight, frameWidth;
     private Direction startDirection; // direction from which animation starts
+    private Exit startCorner; //corner from which animation starts
+    //private Point startCorner; //corner from which animation starts
+
 
     public Animation(Bitmap spriteGrid, int frameHeight, int frameWidth, Direction startDirection) {
         this.startTime = System.nanoTime();
@@ -54,15 +58,49 @@ public class Animation {
         }
     }
 
-    public Bitmap getImage(Direction rotationDirection) {
+    public Bitmap getImage(Direction rotationDirection) {  // todo remove
         int rotationScale = this.startDirection.getDiffFrom(rotationDirection);
 
         Matrix matrix = new Matrix();
         matrix.postRotate(90 * rotationScale);
 
-        if (rotationScale < 0) { // todo handle mirror images
-            matrix.preScale(-1, 1); // mirror image
-        }
+       // if (rotationScale == 2 || rotationScale == -2) { // todo handle mirror images
+            //matrix.preScale(-1, 1); // mirror image
+      //  }
+
+        return Bitmap.createBitmap(
+                this.frames[this.currentFrame], 0, 0, this.frameWidth,
+                this.frameHeight, matrix, true);
+    }
+
+    public Bitmap getImage(Point corner) {
+        int rotationScale = 0;
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90 * rotationScale);
+
+        // if (rotationScale == 2 || rotationScale == -2) { // todo handle mirror images
+        //matrix.preScale(-1, 1); // mirror image
+        //  }
+
+        return Bitmap.createBitmap(
+                this.frames[this.currentFrame], 0, 0, this.frameWidth,
+                this.frameHeight, matrix, true);
+    }
+
+    public void setStartCorner(Exit corner) {
+        this.startCorner = corner;
+    }
+
+    public Bitmap getImage(Exit corner) {
+        int rotationScale = corner.getCorner() - this.startCorner.getCorner(); // todo
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90 * rotationScale);
+
+        // if (rotationScale == 2 || rotationScale == -2) { // todo handle mirror images
+        //matrix.preScale(-1, 1); // mirror image
+        //  }
 
         return Bitmap.createBitmap(
                 this.frames[this.currentFrame], 0, 0, this.frameWidth,

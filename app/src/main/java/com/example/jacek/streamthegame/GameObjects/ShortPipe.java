@@ -3,7 +3,6 @@ package com.example.jacek.streamthegame.GameObjects;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 
 import com.example.jacek.streamthegame.Animation;
 import com.example.jacek.streamthegame.Direction;
@@ -33,6 +32,9 @@ public class ShortPipe extends GameObject {
                         context.getResources(),
                         R.drawable.short_pipe_spritesheet),
                 this.heightCells, this.widthCells, Direction.UP);
+
+        this.animation.setStartCorner(new Exit(1, Direction.UP));
+
         this.exit1 = new Exit(1, Direction.UP);
         this.exit2 = new Exit(3, Direction.DOWN);
     }
