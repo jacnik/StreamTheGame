@@ -1,7 +1,9 @@
 package com.example.jacek.streamthegame;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
@@ -27,6 +29,8 @@ public class Grid {
     //      int i = row*this.nCols + col;
     private GameObject[] currentLayout;
     private GameObjectFactory gameObjectFactory;
+    private Paint drawingPaint = new Paint();
+    private HashSet<GameObject> drawn = new HashSet<>(); // for optimisation don't make this local
 
     public Grid(Context context, int canvasHeight, int canvasWidth) {
         this.canvasHeight = canvasHeight;
@@ -35,7 +39,6 @@ public class Grid {
     }
 
     public void draw(Canvas canvas) {
-        HashSet<GameObject> drawn = new HashSet<>();
         for (int i = 0; i < this.nRows * this.nCols; ++i) {
             GameObject item = currentLayout[i];
             if (item != null && !drawn.contains(item)) {
@@ -46,10 +49,11 @@ public class Grid {
                     item.getImage(),
                     this.cellWidth * col,
                     this.cellHeight * row,
-                    null);
+                    this.drawingPaint);
                 drawn.add(item);
             }
         }
+        drawn.clear();
     }
 
     public int getCellWidth() {
@@ -115,6 +119,14 @@ public class Grid {
 
     public synchronized void registerAnimationFinishedHandler(AnimationFinishedListener listener) {
         this.animationFinishedListener = listener;
+    }
+
+    public void setBlur() {
+        this.drawingPaint.setAlpha(100);
+    }
+
+    public void resetBlur() {
+        this.drawingPaint.setAlpha(255);
     }
 
     private void updateAnimations(GameObject obj, int pos) {

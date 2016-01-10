@@ -16,6 +16,10 @@ import java.util.EventObject;
 public class GamePanel extends SurfaceView
         implements SurfaceHolder.Callback, AnimationFinishedListener {
 
+    private static final int HOME = 0;
+    private static final int GAME = 1;
+    private static final int CONGRATS = 2;
+
     private final long TAP_LENGTH = 300; // milliseconds
     private LevelProvider levelProvider = new LevelProvider();
 
@@ -29,8 +33,10 @@ public class GamePanel extends SurfaceView
 
     private boolean isAnimating;
 
-    private boolean isHome = true; // todo implement screen after beating the level
+    //private boolean isHome = true; // todo implement screen after beating the level
+    private int currentScreen;
     private HomeScreen homeScreen;
+    private CongratsScreen congratsScreen;
 
     public GamePanel(Context context) {
         super(context);
@@ -48,7 +54,9 @@ public class GamePanel extends SurfaceView
     public boolean onTouchEvent(MotionEvent event) {
         /** If animation is in progress don't handle any events */
         if (this.isAnimating) return super.onTouchEvent(event);
-        if (this.isHome) return this.handleHomeEvents(event);
+        if (this.currentScreen == HOME) return this.handleHomeEvents(event);
+        if (this.currentScreen == CONGRATS) return this.handleCongratEvents(event);
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
             int row = (int) event.getY() / this.grid.getCellHeight();
@@ -101,6 +109,7 @@ public class GamePanel extends SurfaceView
         this.grid.registerAnimationFinishedHandler(this);
 
         this.homeScreen = new HomeScreen(this.getContext(), this.levelProvider.getLevelCount());
+        this.congratsScreen = new CongratsScreen();
 
         // we can safely start the game loop
         this.thread.setRunning(true);
@@ -130,8 +139,11 @@ public class GamePanel extends SurfaceView
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (this.isHome) {
+        if (this.currentScreen == HOME) {
             this.homeScreen.draw(canvas);
+        } else if (this.currentScreen == CONGRATS) {
+            this.grid.draw(canvas);
+            this.congratsScreen.draw(canvas);
         } else {
             this.grid.draw(canvas);
         }
@@ -140,7 +152,10 @@ public class GamePanel extends SurfaceView
     @Override
     public void animationFinished(AnimationFinishedEvent event) {
         this.isAnimating = false;
-        this.isHome = event.isSuccess();
+        if (event.isSuccess()) {
+            this.grid.setBlur();
+            this.currentScreen = CONGRATS;
+        }
     }
 
     public synchronized void update() {
@@ -149,14 +164,20 @@ public class GamePanel extends SurfaceView
         }
     }
 
-    public boolean handleHomeEvents(MotionEvent event) {
+    private boolean handleHomeEvents(MotionEvent event) {
         int clickedLevel = this.homeScreen.clicked(
                 Math.round(event.getX()), Math.round(event.getY()));
         if (clickedLevel > -1) {
             this.grid.setLevel(
                     this.levelProvider.getLevel(clickedLevel));
-            this.isHome = false;
+            this.currentScreen = GAME;
         }
+        return true;
+    }
+
+    private boolean handleCongratEvents(MotionEvent event) {
+        this.grid.resetBlur();
+        this.currentScreen = HOME;
         return true;
     }
 }

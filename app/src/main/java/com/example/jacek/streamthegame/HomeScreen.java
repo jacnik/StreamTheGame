@@ -94,8 +94,6 @@ public class HomeScreen {
 
         int d = this.levels[0].width() > this.levels[0].height() ?
                 this.levels[0].height() : this.levels[0].width(); // get smaller from width/height
-        Paint p = new Paint(Color.BLUE);
-        p.setColor(Color.BLUE);
         // draw rectangles and text
         for (int i = 0; i < this.levels.length; ++i) {
             canvas.drawCircle(
