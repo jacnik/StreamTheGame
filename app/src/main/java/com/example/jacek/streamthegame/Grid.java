@@ -121,7 +121,7 @@ public class Grid {
     }
 
     public void setBlur() {
-        this.drawingPaint.setAlpha(100);
+        this.drawingPaint.setAlpha(150);
     }
 
     public void resetBlur() {

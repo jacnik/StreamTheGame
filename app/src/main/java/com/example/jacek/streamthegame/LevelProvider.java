@@ -19,6 +19,8 @@ public class LevelProvider {
                 return this.level_1();
             case 2:
                 return this.level_2();
+            case 3:
+                return this.level_3();
             default: return defaultLevel();
         }
     }
@@ -73,6 +75,23 @@ public class LevelProvider {
         return new LevelDefinition(nRows, nCols, objects);
     }
 
+    private LevelDefinition level_3() {
+        int nRows = 7;
+        int nCols = 10;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 3, 4, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 3, 5, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.bend2, 5, 0));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 0, 0));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 5, 8, 1));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 3, 0, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 5));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 1, 5, 2));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 4, 6, 2));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
 
     private LevelDefinition defaultLevel() {
         int nRows = 7;
