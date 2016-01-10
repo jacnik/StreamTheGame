@@ -180,12 +180,19 @@ public class GamePanel extends SurfaceView
     }
 
     private boolean handleHomeEvents(MotionEvent event) {
-        int clickedLevel = this.homeScreen.clicked(
-                Math.round(event.getX()), Math.round(event.getY()));
-        if (clickedLevel > -1) {
-            this.grid.setLevel(
-                    this.levelProvider.getLevel(clickedLevel));
-            this.currentScreen = GAME;
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            this.lastTap = System.nanoTime()/1000000;
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            /* if tap event occurred */
+            if (System.nanoTime()/1000000 - this.lastTap < TAP_LENGTH) {
+                int clickedLevel = this.homeScreen.clicked(
+                        Math.round(event.getX()), Math.round(event.getY()));
+                if (clickedLevel > -1) {
+                    this.grid.setLevel(
+                            this.levelProvider.getLevel(clickedLevel));
+                    this.currentScreen = GAME;
+                }
+            }
         }
         return true;
     }
