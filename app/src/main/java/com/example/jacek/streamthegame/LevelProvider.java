@@ -14,14 +14,16 @@ public class LevelProvider {
     public LevelDefinition getLevel(int level) {
         switch (level) {
             case 0:
-                return this.level_1();
+                return this.level_0();
             case 1:
+                return this.level_1();
+            case 2:
                 return this.level_2();
             default: return defaultLevel();
         }
     }
 
-    private LevelDefinition level_1() { //todo shuffle objects
+    private LevelDefinition level_0() { //todo shuffle objects
         int nRows = 7;
         int nCols = 10;
         ArrayList<GameObjectDefinition> objects = new ArrayList<>();
@@ -37,7 +39,7 @@ public class LevelProvider {
         return new LevelDefinition(nRows, nCols, objects);
     }
 
-    private LevelDefinition level_2() { //todo shuffle objects
+    private LevelDefinition level_1() { //todo shuffle objects
         int nRows = 7;
         int nCols = 10;
         ArrayList<GameObjectDefinition> objects = new ArrayList<>();
@@ -51,6 +53,26 @@ public class LevelProvider {
 
         return new LevelDefinition(nRows, nCols, objects);
     }
+
+    private LevelDefinition level_2() {
+        int nRows = 7;
+        int nCols = 10;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 0));
+        objects.add(new GameObjectDefinition(Sprite.enter, 6, 9));
+
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 1, 0));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 3, 0));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 5, 0));
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 1, 4, 1));
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 3));
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 0, 7, 2));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 2, 7, 2));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 4, 8));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
 
     private LevelDefinition defaultLevel() {
         int nRows = 7;
