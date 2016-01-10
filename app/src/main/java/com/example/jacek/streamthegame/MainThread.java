@@ -43,7 +43,9 @@ public class MainThread extends Thread {
                 this.setRunning(false);
             // todo handle main loop exceptions
             }
-            surfaceHolder.unlockCanvasAndPost(canvas);
+            if (this.canvas != null) {
+                this.surfaceHolder.unlockCanvasAndPost(this.canvas);
+            }
 
             timeMillis = (System.nanoTime() - startTime)/1000000;
             waitTime = targetTime - timeMillis;
@@ -58,5 +60,4 @@ public class MainThread extends Thread {
     public void setRunning(boolean running) {
         this.running = running;
     }
-
 }

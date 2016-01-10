@@ -1,7 +1,6 @@
 package com.example.jacek.streamthegame;
 
 import android.content.Context;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;

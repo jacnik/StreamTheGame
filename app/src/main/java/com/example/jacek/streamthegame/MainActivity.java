@@ -7,6 +7,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 
+    private GamePanel gamePanel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +18,14 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(new GamePanel(this));
+        this.gamePanel = new GamePanel(this);
+        setContentView(this.gamePanel);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.gamePanel.backPressed()) {
+            super.onBackPressed();
+        }
     }
 }

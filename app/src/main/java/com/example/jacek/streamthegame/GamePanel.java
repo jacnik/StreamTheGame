@@ -8,7 +8,6 @@ import android.view.SurfaceView;
 
 import com.example.jacek.streamthegame.GameObjects.GameObject;
 
-import java.util.EventObject;
 
 /**
  * Created by jacek on 11/9/2015.
@@ -111,7 +110,13 @@ public class GamePanel extends SurfaceView
         this.homeScreen = new HomeScreen(this.getContext(), this.levelProvider.getLevelCount());
         this.congratsScreen = new CongratsScreen();
 
+        this.currentScreen = HOME;
+        this.isAnimating = false;
+
         // we can safely start the game loop
+        if (this.thread.getState() == Thread.State.TERMINATED) {
+            this.thread = new MainThread(getHolder(), this);
+        }
         this.thread.setRunning(true);
         this.thread.start();
     }
@@ -125,13 +130,13 @@ public class GamePanel extends SurfaceView
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
         while(retry) {
-           try{
-               this.thread.setRunning(false);
-               thread.join();
+            try{
+                this.thread.setRunning(false);
+                thread.join();
 
-           } catch (InterruptedException e) {
-               e.printStackTrace(); // todo handle it nicely
-           }
+            } catch (InterruptedException e) {
+                e.printStackTrace(); // todo handle it nicely
+            }
             retry = false;
         }
     }
@@ -162,6 +167,16 @@ public class GamePanel extends SurfaceView
         if (this.isAnimating) {
             this.grid.update();
         }
+    }
+
+    public boolean backPressed() {
+        if (this.currentScreen == HOME) {
+            return true;
+        } else {
+            this.isAnimating = false;
+            this.currentScreen = HOME;
+        }
+        return false;
     }
 
     private boolean handleHomeEvents(MotionEvent event) {
