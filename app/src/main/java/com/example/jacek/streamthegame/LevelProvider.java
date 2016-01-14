@@ -25,6 +25,10 @@ public class LevelProvider {
                 return this.level_4();
             case 5:
                 return this.level_5();
+            case 6:
+                return this.level_6();
+            case 7:
+                return this.level_7();
             default: return defaultLevel();
         }
     }
@@ -132,6 +136,50 @@ public class LevelProvider {
         objects.add(new GameObjectDefinition(Sprite.l_bend, 5, 8, 2));
 
         objects.add(new GameObjectDefinition(Sprite.short_pipe, 3, 10));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
+    private LevelDefinition level_6() {
+        int nRows = 8;
+        int nCols = 12;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 0, 10, 2));
+        objects.add(new GameObjectDefinition(Sprite.enter, 7, 0, 1));
+
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 5, 2, 1));
+
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 2, 0, 3));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 3, 10, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 6, 1, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.bend2, 0, 0));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 6, 10, 1));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 4, 8, 3));
+
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
+    private LevelDefinition level_7() {
+        int nRows = 8;
+        int nCols = 12;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 6, 11, 3));
+        objects.add(new GameObjectDefinition(Sprite.enter, 2, 3, 1));
+
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 0, 2, 2));//
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 1, 4, 1));//
+
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 0, 0));//
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 6, 5, 2));//
+
+        objects.add(new GameObjectDefinition(Sprite.s_bend, 1, 7));
+
+        objects.add(new GameObjectDefinition(Sprite.bend2, 5, 0));//
+        objects.add(new GameObjectDefinition(Sprite.bend2, 2, 4, 1));//
+        objects.add(new GameObjectDefinition(Sprite.bend2, 4, 7, 3));
+        objects.add(new GameObjectDefinition(Sprite.bend2, 4, 9, 2));
 
         return new LevelDefinition(nRows, nCols, objects);
     }
