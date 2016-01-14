@@ -57,7 +57,7 @@ public class MainThread extends Thread {
         }
     }
 
-    public void setRunning(boolean running) {
+    public synchronized void setRunning(boolean running) {
         this.running = running;
     }
 }

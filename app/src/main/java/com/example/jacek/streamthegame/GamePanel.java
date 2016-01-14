@@ -42,7 +42,7 @@ public class GamePanel extends SurfaceView
         // add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
-        thread = new MainThread(getHolder(), this);
+        this.thread = new MainThread(getHolder(), this);
 
         // make game panel focusable so it can handle events
         setFocusable(true);

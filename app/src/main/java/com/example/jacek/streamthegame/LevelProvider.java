@@ -23,6 +23,8 @@ public class LevelProvider {
                 return this.level_3();
             case 4:
                 return this.level_4();
+            case 5:
+                return this.level_5();
             default: return defaultLevel();
         }
     }
@@ -110,6 +112,27 @@ public class LevelProvider {
         objects.add(new GameObjectDefinition(Sprite.short_pipe, 4, 8));
         objects.add(new GameObjectDefinition(Sprite.short_pipe, 1, 6, 1));
         objects.add(new GameObjectDefinition(Sprite.short_pipe, 6, 6, 1));
+        return new LevelDefinition(nRows, nCols, objects);
+    }
+
+    private LevelDefinition level_5() {
+        int nRows = 8;
+        int nCols = 12;
+        ArrayList<GameObjectDefinition> objects = new ArrayList<>();
+        objects.add(new GameObjectDefinition(Sprite.exit, 2, 2, 3));
+        objects.add(new GameObjectDefinition(Sprite.enter, 6, 11));
+
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 0, 11));
+        objects.add(new GameObjectDefinition(Sprite.c_bend, 7, 10, 3));
+
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 0, 0, 3));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 0, 2));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 3, 4, 3));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 3, 6, 1));
+        objects.add(new GameObjectDefinition(Sprite.l_bend, 5, 8, 2));
+
+        objects.add(new GameObjectDefinition(Sprite.short_pipe, 3, 10));
+
         return new LevelDefinition(nRows, nCols, objects);
     }
 
